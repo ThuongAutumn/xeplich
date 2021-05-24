@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   {% load static %}
+   <title>{% block title %}{% endblock %}</title>
+   {% block script %}{% endblock script %}
+   <link rel="stylesheet" href="{% static 'css/base.css'%}">
+   
+</head>
+<body>
+    <div class="container">
+    <header>GENY TEAM</header>
+    <nav>
+        <ul>
+          <li>thêm phòng</li>
+          <li>thêm khóa học</li>
+          <li>thêm lịch học</li>
+          <li>thêm lớp học</li>
+        </ul>
+      </nav>
+   {% block content %}
+   {% endblock %}
+   <footer>
+       @2020 Gteam
+   </footer>
+   </div>
+</body>
+</html>

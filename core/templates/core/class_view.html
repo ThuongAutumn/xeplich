@@ -1,0 +1,73 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}
+Dashboard scheduling
+{% endblock title %}
+
+{% block script %}
+{% endblock script %}
+
+{% block content %}
+<form name="formclass" action="" method="post">
+    {% csrf_token %}
+    <label for="">Tên lớp:</label>
+    <input type="text" name="name"><br>
+    <label for="">Số lượng:</label>
+    <input type="number" name="number" min="0" max="40"><br>
+    <label for="">Lịch học:</label>
+    <select name="schedule" id="schedule">
+        <option value="1MWF">Shift 1 Mon Wed Fri</option>
+        <option value="2MWF">Shift 2 Mon Wed Fri</option>
+        <option value="1TTS">Shift 1 Tue Thu Sat</option>
+        <option value="2TTS">Shift 2 Tue Thu Sat</option>
+        <option value="1F">Shift 1 All Week</option>
+        <option value="2F">Shift 2 All Week</option>
+    </select>
+    <label for="">Khoá học:</label>
+    <select name="courses" id="courses">
+        {% for course in courses %}
+            <option value="{{course.id}}">{{course.name}}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Thêm">
+</form>
+<div class="view">
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Tên Lớp</th>
+            <th>Phòng</th>
+            <th>Sĩ số</th>
+            <th>Lịch học</th>
+            <th>Thời gian bắt đầu</th>
+            <th>Thời gian kết thúc</th>
+            <th>Trạng thái</th>
+        </tr>
+
+    </table>
+</div>
+<script>
+    var table_view = document.querySelector('.view>table')
+
+    loadTable()
+
+    function loadTable(){
+        let text = ''
+        {% for cl in classes %}
+            text += "<tr>"
+            text += `<td><a href="#">{{cl.id}}</a></td>
+            <td>{{cl.name}}</td>
+            <td>{{cl.room.name}}</td>
+            <td>{{cl.number}}</td>
+            <td>{{cl.get_day_display}}</td>
+            <td>{{cl.start_day}}</td>
+            <td>{{cl.end_day}}</td>
+            <td>{{cl.get_status_display}}</td>`
+            text += "</tr>"
+        {% endfor %}
+
+        table_view.insertAdjacentHTML('beforeend',text)
+    }
+</script>
+{% endblock content %}
