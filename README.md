@@ -2,4 +2,4 @@
 
 install django framework
 
-run by 'py manage.py runserver'
+run by `py manage.py runserver`
