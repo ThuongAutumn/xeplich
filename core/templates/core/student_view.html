@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}
+Dashboard scheduling
+{% endblock title %}
+
+{% block script %}
+{% endblock script %}
+
+{% block content %}
+<form name="formcourse" action="" method="post">
+    {% csrf_token %}
+    <label for="">Tên học sinh:</label>
+    <input type="text" name="name" required><br>
+    <label for="">Ngày tháng năm sinh:</label>
+    <input type="date" name="birth" required><br>
+    <label for="">Các lớp học:</label>
+    {% for class in classes %}
+        <input type="checkbox" id="{{class.id}}" name="{{class.id}}" value="{{class.id}}">
+        <label for="{{class.id}}">{{class.name}}</label><br>
+    {% endfor %}
+    <br>
+    <input type="hidden" name="number" value="1"><br>
+    <input type="submit" value="Thêm">
+</form>
+<div class="view">
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Tên học sinh</th>
+            <th>Ngày tháng năm sinh</th>
+            <th>Các lớp học</th>
+            <th></th>
+        </tr>
+
+    </table>
+</div>
+<script>
+    var table_view = document.querySelector('.view>table')
+
+    loadTable()
+
+    function loadTable(){
+        let text = ''
+        {% for student in students %}
+            text += "<tr>"
+            text += `<td><a href="#">{{student.id}}</a></td>
+            <td>{{student.name}}</td>
+            <td>{{student.birth}}</td>
+            <td>
+            {% for class in student.classes.all %}
+                <p>{{class.name}}</p>
+            {% endfor %}
+            </td>
+            <td><a href="#">Xoá</a></td>`
+            text += "</tr>"
+        {% endfor %}
+
+        table_view.insertAdjacentHTML('beforeend',text)
+    }
+</script>
+{% endblock content %}

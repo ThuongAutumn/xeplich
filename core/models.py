@@ -11,8 +11,8 @@ STATUS_ROOM_CHOICES = (
 )
 
 DURATION_CHOICES = (
-    ('2', 'Two Week'),
-    ('3', 'Three Week'),
+    ('2W', 'Two Weeks'),
+    ('3W', 'Three Weeks'),
 )
 
 SCHEDULE_CHOICES = (
@@ -29,6 +29,7 @@ STATUS_CHOICES = (
     ('DOING', 'Đang học'),
     ('CANCELED', 'Đã huỷ'),
     ('WAITING', 'Đang chờ'),
+    ('LOCKED', 'Đã khoá lớp'),
 )
   
 
@@ -43,7 +44,7 @@ class Room(models.Model):
 
 class Course(models.Model):
     name = models.CharField(default='',max_length=255)
-    duration = models.CharField(choices=DURATION_CHOICES, max_length=1)
+    duration = models.CharField(choices=DURATION_CHOICES, max_length=2)
 
     def __str__(self):
         return self.name
@@ -69,5 +70,11 @@ class Class(models.Model):
     def __str__(self):
         return self.name
 
-    def get_value_display(self):
-        return self.status
+
+class Student(models.Model):
+    name = models.CharField(default='',max_length=255)
+    birth = models.DateField(blank=True, null=True)
+    classes = models.ManyToManyField(Class, blank=True, null=True)
+
+    def __str__(self):
+        return self.name

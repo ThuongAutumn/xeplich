@@ -1,0 +1,58 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}
+Dashboard scheduling
+{% endblock title %}
+
+{% block script %}
+{% endblock script %}
+
+{% block content %}
+<form name="formcourse" action="" method="post">
+    {% csrf_token %}
+    <label for="">Tên Khoá học:</label>
+    <input type="text" name="name" required><br>
+    <label for="">Sức chứa:</label>
+    <input type="number" name="capacity" required><br>
+    <label for="">Trạng thái:</label>
+    <select name="status" id="status">  
+        <option value="W">Working</option>
+        <option value="U">Upgrading</option>
+        <option value="B">Broken</option>
+    </select> <br>
+    <input type="submit" value="Thêm">
+</form>
+<div class="view">
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Tên Phong</th>
+            <th>Sức chứa</th>
+            <th>Trạng thái</th>
+            <th></th>
+        </tr>
+
+    </table>
+</div>
+<script>
+    var table_view = document.querySelector('.view>table')
+
+    loadTable()
+
+    function loadTable(){
+        let text = ''
+        {% for room in rooms %}
+            text += "<tr>"
+            text += `<td><a href="#">{{room.id}}</a></td>
+            <td>{{room.name}}</td>
+            <td>{{room.capacity}}</td>
+            <td>{{room.get_status_display}}</td>
+            <td><a href="#">Xoá</a></td>`
+            text += "</tr>"
+        {% endfor %}
+
+        table_view.insertAdjacentHTML('beforeend',text)
+    }
+</script>
+{% endblock content %}

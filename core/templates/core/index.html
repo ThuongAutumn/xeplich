@@ -35,13 +35,13 @@ Dashboard scheduling
                 {% for room in rooms %}
                     text += `<ul>
                                 <li class="room_{{room.id}}">{{room.name}}</li>
-                                <li class="day_full day_{{room.id}}_MWF"></li>
-                                <li class="day_full day_{{room.id}}_TTS"></li>
-                                <li class="day_full day_{{room.id}}_MWF"></li>
-                                <li class="day_full day_{{room.id}}_TTS"></li>
-                                <li class="day_full day_{{room.id}}_MWF"></li>
-                                <li class="day_full day_{{room.id}}_TTS"></li>
-                                <li class="day_full day_{{room.id}}_F"></li>
+                                <li class="day_full_{{room.id}} day_{{room.id}}_MWF"></li>
+                                <li class="day_full_{{room.id}} day_{{room.id}}_TTS"></li>
+                                <li class="day_full_{{room.id}} day_{{room.id}}_MWF"></li>
+                                <li class="day_full_{{room.id}} day_{{room.id}}_TTS"></li>
+                                <li class="day_full_{{room.id}} day_{{room.id}}_MWF"></li>
+                                <li class="day_full_{{room.id}} day_{{room.id}}_TTS"></li>
+                                <li class="day_full_{{room.id}} day_{{room.id}}_F"></li>
                             </ul>`
                 {% endfor %}
                 divSchedule.insertAdjacentHTML('beforeend',text)
@@ -50,30 +50,29 @@ Dashboard scheduling
 
             function a(){
                 {% for cl in classes %}
-                    console.log(`{{cl.room.id}}`)
+                    //console.log(`{{cl.room.id}}`)
                     if(`{{cl.day}}`.indexOf('MWF') != -1){
                         let id = `.day_{{cl.room.id}}_MWF`
                         let choices = document.querySelectorAll(id)
-                        console.log(choices)
+                        //console.log(choices)
                         choices.forEach(ele =>{
-                            //ele.textContent += `{{cl.name}}`
-                            ele.innerHTML += `<li class="day_full day_{{room.id}}_MWF"><p>{{cl.name}}</p></li>`
+                            ele.innerHTML += `<p>{{cl.name}}</p>`
                         })
                     }else if(`{{cl.day}}`.indexOf('TTS') != -1){
                         let id = `.day_{{cl.room.id}}_TTS`
                         let choices = document.querySelectorAll(id)
-                        console.log(choices)
+                        //console.log(choices)
                         choices.forEach(ele =>{
-                            ele.textContent += `{{cl.name}}`
+                            ele.innerHTML += `<p>{{cl.name}}</p>`
                         })
                     }else{
-                        let choices = document.querySelectorAll('day_full')
+                        let choices = document.querySelectorAll('.day_full_{{cl.room.id}}')
+                        console.log(choices)
                         choices.forEach(ele =>{
-                            ele.textContent += `{{cl.name}}`
+                            ele.innerHTML += `<p>{{cl.name}}</p>`
                         })
                     }
-                    swich
-              
+                    
                 {% endfor %}
             }
             

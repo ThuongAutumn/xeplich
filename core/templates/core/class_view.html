@@ -12,9 +12,9 @@ Dashboard scheduling
 <form name="formclass" action="" method="post">
     {% csrf_token %}
     <label for="">Tên lớp:</label>
-    <input type="text" name="name"><br>
+    <input type="text" name="name" required><br>
     <label for="">Số lượng:</label>
-    <input type="number" name="number" min="0" max="40"><br>
+    <input type="number" name="number" min="0" max="40" required><br>
     <label for="">Lịch học:</label>
     <select name="schedule" id="schedule">
         <option value="1MWF">Shift 1 Mon Wed Fri</option>
@@ -43,6 +43,7 @@ Dashboard scheduling
             <th>Thời gian bắt đầu</th>
             <th>Thời gian kết thúc</th>
             <th>Trạng thái</th>
+            <th></th>
         </tr>
 
     </table>
@@ -63,7 +64,8 @@ Dashboard scheduling
             <td>{{cl.get_day_display}}</td>
             <td>{{cl.start_day}}</td>
             <td>{{cl.end_day}}</td>
-            <td>{{cl.get_status_display}}</td>`
+            <td>{{cl.get_status_display}}</td>
+            <td><a href="#">Xoá</a></td>`
             text += "</tr>"
         {% endfor %}
 
