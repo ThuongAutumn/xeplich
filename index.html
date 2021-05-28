@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XẾP LỊCH</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li>thêm phòng</li>
+        <li>thêm khóa học</li>
+        <li>thêm lịch học</li>
+        <li>thêm lớp học</li>
+      </ul>
+    </nav>
+
+    <div class="timetable">
+      <div class="week-names">
+        <div>monday</div>
+        <div>tuesday</div>
+        <div>wednesday</div>
+        <div>thursday</div>
+        <div>friday</div>
+        <div>saturday</div>
+        <div class="weekend">sunday</div>
+      </div>
+      <div class="time-interval">
+        <div>ROOM 1</div>
+        <div>ROOM 2</div>
+        <div>ROOM 3</div>
+        <div>ROOM 4</div>
+      </div>
+      <div class="content">
+        <div>
+          <div class="accent-orange-gradient"></div>
+        </div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div>
+          <div class="accent-green-gradient"></div>
+        </div>
+        <div></div>
+        <div class="weekend"></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div>
+          <div class="accent-cyan-gradient"></div>
+        </div>
+        <div></div>
+        <div></div>
+        <div class="weekend"></div>
+        <div></div>
+        <div>
+          <div class="accent-pink-gradient"></div>
+        </div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div class="weekend"></div>
+        <div></div>
+        <div></div>
+        <div>
+          <div class="accent-purple-gradient"></div>
+        </div>
+        <div></div>
+        <div></div>
+        <div>
+          <div class="accent-blue-gradient"></div>
+        </div>
+        <div class="weekend"></div>
+        
+      </div>
+    </div>
+
+    <script >
+        let text = ''
+        {% for cl in classes %}
+            text += `<div class="full_id MWF_id"></div>
+                    <div full_{% cl.id %} TTS_id ></div>
+                    <div full_{% cl.id %} MWF_id ></div>
+                    <div full_{% cl.id %} TTS_id ></div>
+                    <div full_{% cl.id %} MWF_id ></div>
+                    <div full_{% cl.id %} TTS_id ></div>
+                    <div MWF_id  class="weekend"></div>`
+        {% endfor %}
+        
+    </script>
+  </body>
+</html>
+© 2021 GitHub, Inc.

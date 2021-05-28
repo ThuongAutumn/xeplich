@@ -11,6 +11,8 @@ Dashboard scheduling
 {% block content %}
 <form name="formclass" action="" method="post">
     {% csrf_token %}
+    <label for="">Mã:</label>
+    <input type="text" name="slug" required><br>
     <label for="">Tên lớp:</label>
     <input type="text" name="name" required><br>
     <label for="">Số lượng:</label>
@@ -35,7 +37,7 @@ Dashboard scheduling
 <div class="view">
     <table>
         <tr>
-            <th>ID</th>
+            <th>Mã Lớp</th>
             <th>Tên Lớp</th>
             <th>Phòng</th>
             <th>Sĩ số</th>
@@ -57,7 +59,7 @@ Dashboard scheduling
         let text = ''
         {% for cl in classes %}
             text += "<tr>"
-            text += `<td><a href="#">{{cl.id}}</a></td>
+            text += `<td><a href="#">{{cl.slug}}</a></td>
             <td>{{cl.name}}</td>
             <td>{{cl.room.name}}</td>
             <td>{{cl.number}}</td>

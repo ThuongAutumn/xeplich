@@ -11,8 +11,9 @@ STATUS_ROOM_CHOICES = (
 )
 
 DURATION_CHOICES = (
-    ('2W', 'Two Weeks'),
-    ('3W', 'Three Weeks'),
+    ('9', '9 Days'),
+    ('15', '15 Days'),
+    ('21', '21 Days'),
 )
 
 SCHEDULE_CHOICES = (
@@ -58,6 +59,7 @@ class Course(models.Model):
 
 class Class(models.Model):
     name = models.CharField(default='',max_length=255)
+    slug = models.SlugField(max_length=30,default='')
     room = models.ForeignKey(Room, on_delete=models.SET_NULL , null=True, blank=True)
     number = models.IntegerField(default=0)
     # schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
@@ -74,6 +76,7 @@ class Class(models.Model):
 class Student(models.Model):
     name = models.CharField(default='',max_length=255)
     birth = models.DateField(blank=True, null=True)
+    phone = models.CharField(default='',null=True,blank=True,max_length=13)
     classes = models.ManyToManyField(Class, blank=True, null=True)
 
     def __str__(self):
