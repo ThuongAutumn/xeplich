@@ -17,7 +17,6 @@ def index(request):
         'rooms': room,
         'courses': course
     }
-    dem_so_hoc_sinh(cls)
     return render(request, 'core/index.html', context)
 
 def dem_so_hoc_sinh():
@@ -292,20 +291,77 @@ class Students(View):
         form = request.POST
         classes = Class.objects.filter(Q(status="LOCKED") | Q(status = "WAITING"))
         
-        try:
-            st = Student.objects.create(name = form['name'], birth = form['birth'])
-            for cl in classes:
-                if cl.students.all().count() < cl.room.capacity:
-                    try:
-                        s = str(cl.id)
-                        value = form[s]
-                        if(value != None):
-                            st.classes.add(cl)
-                    except:
-                        continue
-            st.save()
-        except:
-            return HttpResponse("lỗi thêm học sinh")
+        list_lop_day = []
+        flag_phong_day = False
+
+        if 'add_student' in form:
+            try:
+                st = Student.objects.create(name = form['name'], birth = form['birth'])
+                for cl in classes:
+                    print("count ",cl.students.all().count())
+                    print("count ",cl.room.capacity)
+                    if cl.students.all().count() < cl.room.capacity:
+                        try:
+                            s = str(cl.id)
+                            value = form[s]
+                            if(value != None):
+                                st.classes.add(cl)
+                                if cl.students.all().count() > cl.number:
+                                    cl.number = cl.students.all().count()
+                                    cl.save()
+                        except:
+                            continue
+                    else:
+                        flag_phong_day = True
+                        list_lop_day.append(cl.slug)
+                st.save()
+            except:
+                return HttpResponse("lỗi thêm học sinh")
+            if flag_phong_day == True:
+                text = '' 
+                for i in list_lop_day:
+                    text += ', '+i
+                return HttpResponse("phòng của lớp ", text , ' đã đầy')
+        
+        elif 'update_student' in form:
+            try:
+                std = Student.objects.get(id = form['sId'])
+                std.name = form['name']
+                std.birth = form['birth']
+                # reset class.number_student
+                for cl in std.classes.all():
+                    cl.number_student -= 1
+                    cl.save()
+                # add new classes in student
+                std.classes.clear()
+                for cl in classes:
+                    if cl.students.all().count() < cl.room.capacity:
+                        try:
+                            s = str(cl.id)
+                            value = form[s]
+                            if(value != None):
+                                std.classes.add(cl)
+                                if cl.students.all().count() > cl.number:
+                                    cl.number = cl.students.all().count()
+                                    cl.save()
+                        except:
+                            continue
+                    else:
+                        flag_phong_day = True
+                        list_lop_day.append(cl.slug)
+            except:
+                return HttpResponse("lỗi sửa học sinh")
+            if flag_phong_day == True:
+                text = '' 
+                for i in list_lop_day:
+                    text += ', '+i
+                return HttpResponse("phòng của lớp ", text , ' đã đầy')
+        else:
+            try:
+                Student.objects.get(id = form['sId']).delete()
+            except:
+                return HttpResponse("lỗi xoá học sinh")
+
         return redirect("students")
 
 

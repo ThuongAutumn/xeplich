@@ -66,7 +66,7 @@ Dashboard scheduling
             <td>{{cl.name}}</td>
             <td>{{cl.room.name}}</td>
             <td>{{cl.course}}</td>
-            <td>{{cl.number}}</td>
+            <td>{{cl.number_student}}/{{cl.number}}</td>
             <td>{{cl.get_day_display}}</td>
             <td>{{cl.start_day}}</td>
             <td>{{cl.end_day}}</td>
@@ -89,8 +89,6 @@ Dashboard scheduling
             var khoahoc = document.getElementsByName('courses')[0]
             var iId = document.querySelector('#iId')
 
-            console.log(e.target.id); 
-            console.log(list_class); 
             let id = e.target.id 
             for( let i of list_class){
                 if( i.id == id){

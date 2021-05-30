@@ -15,14 +15,13 @@ Dashboard scheduling
     <input type="text" name="name" required><br>
     <label for="">Ngày tháng năm sinh:</label>
     <input type="date" name="birth" required><br>
-    <label for="">Các lớp học:</label>
+    <label for="">Các lớp học:</label><br>
     {% for class in classes %}
         <input type="checkbox" id="{{class.id}}" name="{{class.id}}" value="{{class.id}}">
         <label for="{{class.id}}">{{class.name}}</label><br>
     {% endfor %}
-    <br>
-    <input type="hidden" name="number" value="1"><br>
-    <input type="submit" value="Thêm">
+    <input type="hidden" name="sId" value=""><br>
+    <input type="submit" name="add_student" value="Thêm"><input type="submit" name="update_student" value="Sửa"><input type="submit" name="delete_student" value="Xoá">
 </form>
 <div class="view">
     <table>
@@ -38,14 +37,20 @@ Dashboard scheduling
 </div>
 <script>
     var table_view = document.querySelector('.view>table')
-
+    var list_std = []
+    var list_class = []
     loadTable()
 
     function loadTable(){
         let text = ''
         {% for student in students %}
+            {% for cl in student.classes.all %}
+                list_class.push( {'id':'{{cl.id}}'} )
+            {% endfor %}
+            list_std.push({"id":'{{student.id}}', 'name':'{{student.name}}', 'classes':list_class, 'birth':'{{student.birth}}' })
+            list_class = []
             text += "<tr>"
-            text += `<td><a href="#">{{student.id}}</a></td>
+            text += `<td><a class="aId" id='{{student.id}}' href="#">{{student.id}}</a></td>
             <td>{{student.name}}</td>
             <td>{{student.birth}}</td>
             <td>
@@ -58,6 +63,31 @@ Dashboard scheduling
         {% endfor %}
 
         table_view.insertAdjacentHTML('beforeend',text)
+    
+    var name = document.getElementsByName('name')[0]
+    var birth = document.getElementsByName('birth')[0]
+    var sId = document.getElementsByName('sId')[0]
+
+    document.querySelectorAll('.aId').forEach((item)=>{
+        item.addEventListener('click', (e)=>{
+            e.preventDefault()
+            id = e.target.id
+            sId.value = id
+            for (const std of list_std) {
+                if (std.id == id) {
+                    let day = new Date(std.birth).toISOString().slice(0, 10);
+                    name.value= std.name
+                    birth.value = day
+                    {% for class in classes %}
+                        document.getElementById(`{{class.id}}`).checked = false
+                    {% endfor %}
+                    for (const cl of std.classes) {
+                        document.getElementById(`${cl.id}`).checked = true
+                    }
+                }
+            }
+        })
+    })
     }
 </script>
 {% endblock content %}
