@@ -12,7 +12,7 @@ class CourseAdmin(admin.ModelAdmin):
     list_display = ['name', 'duration']
 
 class ClassAdmin(admin.ModelAdmin):
-    list_display = ['name', 'room', 'number', 'day', 'course', 'status' ,'start_day']
+    list_display = ['name', 'room', 'number', 'day', 'course', 'status' ,'start_day', 'end']
 
 
 admin.site.register(Student, StudentAdmin)

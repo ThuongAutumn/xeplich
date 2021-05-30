@@ -3,19 +3,29 @@ from django.http import HttpResponse
 from .models import Class, Course, Room, Student
 from django.views import View
 import datetime
+from django.db.models import Q
 
 # Create your views here.
 
 def index(request):
-    cl = Class.objects.all()
+    dem_so_hoc_sinh()
+    cls = Class.objects.all()
     room = Room.objects.filter(status = 'W' )
     course = Course.objects.filter()
     context = {
-        'classes': cl,
+        'classes': cls,
         'rooms': room,
         'courses': course
     }
+    dem_so_hoc_sinh(cls)
     return render(request, 'core/index.html', context)
+
+def dem_so_hoc_sinh():
+    cls = Class.objects.filter(Q(status="LOCKED") | Q(status = "WAITING"))
+    for cl in cls:
+       cl.number_student = cl.students.all().count()
+       cl.save()
+    return 1
 
 def get_start_and_end_day(ds_room_trong,cl):
     for i in ds_room_trong:
@@ -74,27 +84,42 @@ def get_start_and_end_day(ds_room_trong,cl):
                     day += datetime.timedelta(days=1)
                     d1 = day.weekday()
                 cl.end_day = day - datetime.timedelta(days=1)
-
+    print(cl.start_day)
     return cl
 
 
 def xuLyXepLich(cl):
-    # cl = Class.objects.get(id = 3) # bien dua vao
-    rms = Room.objects.all().order_by('-capacity')
+    # đưa 1 lớp (cl) mới vào xử lý return start_day, end_day và room
 
-    cls_trung_day = Class.objects.filter(day = cl.day).order_by('end_day')
-    print("bd xu ly")
-    # kiểm tra có full phòng hay chưa
-    if cls_trung_day.count() == rms.count():
+    rms = Room.objects.filter(status = "W").order_by('capacity') # sort tăng dần
+    # những lớp cùng ca học và không có lớp nào sau khi lớp đó kết thúc
+    cls_trung_ca_hoc_cuoi_cung = Class.objects.filter(day = cl.day, end = True).order_by('end_day')
+
+    # test
+    # cls_trung_day = Class.objects.all().order_by('end_day')
+    # for i in cls_trung_day:
+    #     print(i.end_day)
+    # return HttpResponse(cls_trung_day)
+
+    print("88 bd xu ly")
+    # kiểm tra có full phòng vào thời điểm đó hay chưa
+
+    if cls_trung_ca_hoc_cuoi_cung.count() == rms.count():
         print("33, if dung")
-        n = 0
-        i = cls_trung_day[n]
         # tìm lớp nào sắp kết thúc và phòng chứa đủ học sinh
         # CHƯA TÍNH ĐẾN VIỆC ĐỔI PHÒNG
-        while i.room.capacity < cl.number:
+        # loại trừ các lớp chưa có phòng
+        n = 0
+        i = cls_trung_ca_hoc_cuoi_cung[n]
+        soLuongChoNgoi = i.room.capacity
+        while int(soLuongChoNgoi) < int(cl.number):
             n += 1
-            i = cls_trung_day[n]
+            i = cls_trung_ca_hoc_cuoi_cung[n]
+            soLuongChoNgoi = i.room.capacity
+
         cl.room = i.room
+        i.end = False
+        i.save()
         # d = datetime.date.today().weekday() # 0 - 6 là thứ 2 - cn
         d = i.end_day.weekday()
         if cl.day.find('MWF') != -1 :
@@ -103,12 +128,12 @@ def xuLyXepLich(cl):
             else:
                 cl.start_day = i.end_day + datetime.timedelta(days=2)
             
-            dem = int(cl.course.duration)
+            so_buoi_hoc = int(cl.course.duration)
             day = cl.start_day
             d1 = day.weekday()
-            while dem > 0:
+            while so_buoi_hoc > 0:
                 if d1 == 0 or d1 == 2 or d1 == 4:
-                    dem -= 1
+                    so_buoi_hoc -= 1
                 day += datetime.timedelta(days=1)
                 d1 = day.weekday()
             cl.end_day = day - datetime.timedelta(days=1)
@@ -119,15 +144,15 @@ def xuLyXepLich(cl):
             else:
                 cl.start_day = i.end_day + datetime.timedelta(days=2)
             
-            dem = int(cl.course.duration)
+            so_buoi_hoc = int(cl.course.duration)
             day = cl.start_day
             d1 = day.weekday()
-            while dem > 0:
+            while so_buoi_hoc > 0:
                 if d1 == 1 or d1 == 3 or d1 == 5:
-                    dem -= 1
+                    so_buoi_hoc -= 1
                 day += datetime.timedelta(days=1)
                 d1 = day.weekday()
-            cl.end_day = day- datetime.timedelta(days=1)
+            cl.end_day = day - datetime.timedelta(days=1)
 
         else:
             if d == 5:
@@ -135,21 +160,21 @@ def xuLyXepLich(cl):
             else:
                 cl.start_day = i.end_day + datetime.timedelta(days=1)
             
-            dem = int(cl.course.duration)
+            so_buoi_hoc = int(cl.course.duration)
             day = cl.start_day
             d1 = day.weekday()
-            while dem > 0:
+            while so_buoi_hoc > 0:
                 if d1 != 6:
-                    dem -= 1
+                    so_buoi_hoc -= 1
                 day += datetime.timedelta(days=1)
                 d1 = day.weekday()
-            cl.end_day = day- datetime.timedelta(days=1)
+            cl.end_day = day - datetime.timedelta(days=1)
     else:
         print("45, if sai")
         dem = 0
         ds_room_trong = []
         for r in rms:
-            for cls_trung in cls_trung_day:
+            for cls_trung in cls_trung_ca_hoc_cuoi_cung:
                 if cls_trung.room == r:
                     dem += 1
             if dem == 0:
@@ -162,6 +187,7 @@ def xuLyXepLich(cl):
 
     print("62,save")
     cl.status = "LOCKED"
+    cl.end = True
     cl.save()
     return HttpResponse(cl.name)
 
@@ -169,6 +195,10 @@ def xuLyXepLich(cl):
 class Classes(View):
 
     def get(self,request):
+        lop_chua_co_phong = Class.objects.filter(room = None)
+        for i in lop_chua_co_phong:
+            xuLyXepLich(i)
+        dem_so_hoc_sinh()
         cl = Class.objects.all()
         course = Course.objects.filter()
         context = {
@@ -180,12 +210,32 @@ class Classes(View):
     def post(self, request, *args, **kwargs):  
         print("b",request)
         form = request.POST
+        print(form['iId'])
         course = Course.objects.get(id = form['courses'])
-        try:
-            cl = Class.objects.create(slug = form['slug'],name = form['name'],number = form['number'], course = course, day = form['schedule'])
-        except:
-            return HttpResponse("lỗi thêm khoá học")
-        xuLyXepLich(cl)
+        if "add_class" in form:
+            try:
+                cl = Class.objects.create(slug = form['slug'],name = form['name'],number = form['number'], course = course, day = form['schedule'])
+                xuLyXepLich(cl)
+            except:
+                return HttpResponse("lỗi thêm khoá học")
+        elif "update_class" in form:
+            try:
+                cl = Class.objects.get(pk = int(form['iId']))
+                cl.slug = form['slug']
+                cl.name = form['name']
+                cl.number = form['number']
+                cl.course = course
+                cl.day = form['schedule']
+                cl.save()
+            except:
+                return HttpResponse("Lỗi cập nhật")
+        else:
+            try:
+                cl = Class.objects.get(pk = int(form['iId']))
+                cl.delete()
+                # XOÁ XONG THÌ PHẢI UPDATE LẠI PHÒNG HỌC VÀ NGÀY BĐ HỌC CÁC KHOÁ SAU NÓ NẾU CÓ
+            except:
+                return HttpResponse("Lỗi xoá")
         return redirect("classes")
         # return render(request, 'core/class_view.html', context)
 
@@ -230,7 +280,8 @@ class Students(View):
 
     def get(self, request):
         students = Student.objects.all()
-        classes = Class.objects.filter(status="WAITING")
+        classes = Class.objects.filter(Q(status="LOCKED") | Q(status = "WAITING"))
+
         context = {
             'students':students,
             'classes':classes,
@@ -239,18 +290,48 @@ class Students(View):
 
     def post(self, request):
         form = request.POST
-        classes = Class.objects.filter(status="WAITING")
+        classes = Class.objects.filter(Q(status="LOCKED") | Q(status = "WAITING"))
         
         try:
             st = Student.objects.create(name = form['name'], birth = form['birth'])
             for cl in classes:
-                try:
-                    s = str(cl.id)
-                    value = form[s]
-                    if(value != None):
-                        st.classes.add(cl)
-                except:
-                    continue
+                if cl.students.all().count() < cl.room.capacity:
+                    try:
+                        s = str(cl.id)
+                        value = form[s]
+                        if(value != None):
+                            st.classes.add(cl)
+                    except:
+                        continue
+            st.save()
         except:
             return HttpResponse("lỗi thêm học sinh")
         return redirect("students")
+
+
+# def a(list_l, list_r):
+#     result = []
+#     for j in list_l:
+#         for i in list_r:
+#             if result.find(i) == -1 and result.find(j) == -1:
+#                 if i.cp >= j.number:
+#                     j.room = i
+#                     result.append({"room":i,"class":j})
+#     return result
+
+# def optimal(n, cls, rms, nc):
+#     rs = a(cls,rms)
+#     if len(rs) == len(cls):
+#         for r in rs:
+#             cl = r['class']
+#             rm = r['room']
+#             cl.room = rm
+#             cl.save()
+#     elif cls[n+1].room.capycity >= nc.number :
+#         nc.room = Room.objects.get(cls[n+1].room)
+#     else:
+#         cl = []
+#         n += 1
+#         for i in range(n, len(cls)):
+#             cl.append(rms[i])
+#         optimal(n,cl,rms,nc)

@@ -62,22 +62,25 @@ class Class(models.Model):
     slug = models.SlugField(max_length=30,default='')
     room = models.ForeignKey(Room, on_delete=models.SET_NULL , null=True, blank=True)
     number = models.IntegerField(default=0)
+    number_student = models.IntegerField(default=0)
     # schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     start_day = models.DateField(null=True, blank=True)
     end_day = models.DateField(null=True, blank=True)
     day = models.CharField(choices=SCHEDULE_CHOICES, max_length=4)
     status = models.CharField(choices=STATUS_CHOICES, max_length=8, default="WAITING")
+    end = models.BooleanField(default=False, null=True, blank=True)
 
     def __str__(self):
         return self.name
+    
 
 
 class Student(models.Model):
     name = models.CharField(default='',max_length=255)
     birth = models.DateField(blank=True, null=True)
     phone = models.CharField(default='',null=True,blank=True,max_length=13)
-    classes = models.ManyToManyField(Class, blank=True, null=True)
+    classes = models.ManyToManyField(Class, blank=True, null=True , related_name="students")
 
     def __str__(self):
         return self.name

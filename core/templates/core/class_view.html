@@ -25,14 +25,16 @@ Dashboard scheduling
         <option value="2TTS">Shift 2 Tue Thu Sat</option>
         <option value="1F">Shift 1 All Week</option>
         <option value="2F">Shift 2 All Week</option>
-    </select>
+    </select><br>
     <label for="">Khoá học:</label>
     <select name="courses" id="courses">
         {% for course in courses %}
             <option value="{{course.id}}">{{course.name}}</option>
         {% endfor %}
     </select>
-    <input type="submit" value="Thêm">
+    <input type="hidden" id="iId" name = 'iId'>
+    <br>
+    <input type="submit" name="add_class" value="Thêm"><input type="submit" name="update_class" value="Sửa"><input type="submit" name ="delete_class" value="Xoá">
 </form>
 <div class="view">
     <table>
@@ -40,6 +42,7 @@ Dashboard scheduling
             <th>Mã Lớp</th>
             <th>Tên Lớp</th>
             <th>Phòng</th>
+            <th>Khoá học</th>
             <th>Sĩ số</th>
             <th>Lịch học</th>
             <th>Thời gian bắt đầu</th>
@@ -52,16 +55,17 @@ Dashboard scheduling
 </div>
 <script>
     var table_view = document.querySelector('.view>table')
-
+    var list_class = []
     loadTable()
 
     function loadTable(){
         let text = ''
         {% for cl in classes %}
             text += "<tr>"
-            text += `<td><a href="#">{{cl.slug}}</a></td>
+            text += `<td><a href="" id="{{cl.id}}" class="aSlug">{{cl.slug}}</a></td>
             <td>{{cl.name}}</td>
             <td>{{cl.room.name}}</td>
+            <td>{{cl.course}}</td>
             <td>{{cl.number}}</td>
             <td>{{cl.get_day_display}}</td>
             <td>{{cl.start_day}}</td>
@@ -69,9 +73,37 @@ Dashboard scheduling
             <td>{{cl.get_status_display}}</td>
             <td><a href="#">Xoá</a></td>`
             text += "</tr>"
+            list_class.push({"id":`{{cl.id}}`, "name":`{{cl.name}}` ,'slug':`{{cl.slug}}`, 'number':`{{cl.number}}`, 'schedule':`{{cl.day}}`, 'course':`{{cl.course.id}}`})
         {% endfor %}
 
         table_view.insertAdjacentHTML('beforeend',text)
     }
+
+        document.querySelectorAll('.aSlug').forEach((item)=>{
+        item.addEventListener('click',(e)=>{
+            e.preventDefault()
+            var slug = document.getElementsByName('slug')[0]
+            var name = document.getElementsByName('name')[0]
+            var number = document.getElementsByName('number')[0]
+            var lichhoc = document.getElementsByName('schedule')[0]
+            var khoahoc = document.getElementsByName('courses')[0]
+            var iId = document.querySelector('#iId')
+
+            console.log(e.target.id); 
+            console.log(list_class); 
+            let id = e.target.id 
+            for( let i of list_class){
+                if( i.id == id){
+                    slug.setAttribute('value',i.slug) 
+                    name.setAttribute('value', i.name)
+                    number.setAttribute('value', i.number)
+                    lichhoc.selectedIndex = i.lichhoc
+                    khoahoc.selectedIndex = i.khoahoc
+                    iId.setAttribute('value', i.id)
+                }
+            }
+        })
+        
+    })
 </script>
 {% endblock content %}
