@@ -11,18 +11,16 @@ STATUS_ROOM_CHOICES = (
 )
 
 DURATION_CHOICES = (
-    ('9', '9 Days'),
-    ('15', '15 Days'),
-    ('21', '21 Days'),
+    (3, '3 Weeks' ),
+    (4, '4 Weeks' ),
+    (5, '5 Weeks' ),
+    (6, '6 Weeks' ),
 )
 
 SCHEDULE_CHOICES = (
-    ("1MWF", "Shift 1 Mon Wed Fri"),
-    ("2MWF", "Shift 2 Mon Wed Fri"),
-    ("1TTS", "Shift 1 Tue Thu Sat"),
-    ("2TTS", "Shift 2 Tue Thu Sat"),
-    ("1F", "Shift 1 All Week"),
-    ("2F", "Shift 2 All Week"),
+    ("MWF", "Shift Mon Wed Fri"),
+    ("TTS", "Shift Tue Thu Sat"),
+    ("F", "Shift All Week"),
 )
 
 STATUS_CHOICES = (
@@ -37,7 +35,7 @@ STATUS_CHOICES = (
 class Room(models.Model):
     name = models.CharField(default="", max_length=50)
     capacity = models.IntegerField(default = 0)
-    status = models.CharField(choices=STATUS_ROOM_CHOICES, max_length=1)
+    status = models.CharField(choices=STATUS_ROOM_CHOICES, max_length=1, default="W")
 
     def __str__(self):
         return self.name
@@ -45,36 +43,32 @@ class Room(models.Model):
 
 class Course(models.Model):
     name = models.CharField(default='',max_length=255)
-    duration = models.CharField(choices=DURATION_CHOICES, max_length=2)
+    duration = models.IntegerField(choices=DURATION_CHOICES, default=3)
 
     def __str__(self):
         return self.name
 
 
-# class Schedule(models.Model):
-#     day = models.CharField(choices=SCHEDULE_CHOICES, max_length=4)
+class Shift(models.Model):
+    day = models.CharField(choices=SCHEDULE_CHOICES, max_length=4) # buổi học
 
-#     def __str__(self):
-#         return self.day
+    def __str__(self) -> str:
+        return self.day
 
 class Class(models.Model):
-    name = models.CharField(default='',max_length=255)
     slug = models.SlugField(max_length=30,default='')
-    room = models.ForeignKey(Room, on_delete=models.SET_NULL , null=True, blank=True)
+    name = models.CharField(default='',max_length=255)
     number = models.IntegerField(default=0)
     number_student = models.IntegerField(default=0)
-    # schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    start_day = models.DateField(null=True, blank=True)
-    end_day = models.DateField(null=True, blank=True)
-    day = models.CharField(choices=SCHEDULE_CHOICES, max_length=4)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="courses")
+    duration = models.IntegerField(default=0)
+    day = models.CharField(choices=SCHEDULE_CHOICES, max_length=4) # buổi học
     status = models.CharField(choices=STATUS_CHOICES, max_length=8, default="WAITING")
-    end = models.BooleanField(default=False, null=True, blank=True)
 
     def __str__(self):
         return self.name
-    
 
+    
 
 class Student(models.Model):
     name = models.CharField(default='',max_length=255)
@@ -84,3 +78,22 @@ class Student(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Week(models.Model):
+    start = models.DateField(blank=True, null=True)
+    end = models.DateField(blank=True, null=True)
+    
+    def __str__(self):
+        return str(self.start) + " / " + str(self.end)
+
+
+class ClassRoom(models.Model):
+    classID = models.ForeignKey(Class, on_delete=models.CASCADE)
+    roomID = models.ForeignKey(Room, on_delete=models.CASCADE)
+    weekID = models.ForeignKey(Week, on_delete=models.CASCADE)
+    day = models.CharField(default="", null=True, blank=True, max_length=3)
+    
+    def __str__(self) -> str:
+        return str(self.classID.name) + " / " + str(self.roomID.name)
+    

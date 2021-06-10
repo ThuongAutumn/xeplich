@@ -77,6 +77,12 @@ Dashboard scheduling
             }
             
         }
+    var list_clrms = []
+    {% for clrm in clrms %}
+        list_clrms.push([`{{clrm.classID}}`,`{{clrm.roomID}}`,`{{clrm.weekID.start}}`,`{{clrm.weekID.end}}`,`{{clrm.day}}`])
+    {% endfor %}
+    var text = JSON.stringify(list_clrms,undefined,0)
+    console.log(text)
     </script>
 
 {% endblock content %} 

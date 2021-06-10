@@ -6,12 +6,14 @@ Dashboard scheduling
 {% endblock title %}
 
 {% block script %}
+<link rel="stylesheet" href="{% static 'css/rooms.css'%}">
+
 {% endblock script %}
 
 {% block content %}
 <form name="formcourse" action="" method="post">
     {% csrf_token %}
-    <label for="">Tên Khoá học:</label>
+    <label for="">Tên phòng:</label>
     <input type="text" name="name" required><br>
     <label for="">Sức chứa:</label>
     <input type="number" name="capacity" required><br>

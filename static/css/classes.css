@@ -1,0 +1,203 @@
+body {
+  background-color: #3c373e;
+  font-weight: 300;
+}
+
+p {
+  font-weight: 300;
+}
+
+a {
+  -webkit-transition: 0.3s all ease;
+  transition: 0.3s all ease;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+header {
+  height: 100px;
+  background-color: #08bfbf;
+}
+
+header .container {
+  margin: auto;
+  max-width: 1400px;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+}
+
+header .container .logo {
+  margin-right: 1150px;
+  height: 100%;
+  width: 100px;
+}
+
+header .container .logo img {
+  width: 100%;
+  height: 100%;
+}
+
+header .container .user {
+  height: 100%;
+  width: 100px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+header .container .user svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: pointer;
+}
+
+header .container .user .avt {
+  margin-right: 45px;
+}
+
+header .container .user .userName {
+  position: absolute;
+  bottom: -12px;
+  right: 105px;
+  cursor: pointer;
+}
+
+header .container .user .log-out {
+  position: absolute;
+  bottom: -12px;
+  right: 40px;
+  cursor: pointer;
+}
+
+nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-bottom: 45px;
+  margin-top: 20px;
+}
+
+nav ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  list-style: none;
+}
+
+nav ul a {
+  text-decoration: none;
+}
+
+nav ul a:hover {
+  text-decoration: underline;
+}
+
+nav ul a:hover li {
+  background-color: white;
+  color: #5c5c0a;
+  -webkit-box-shadow: 0px 1px #888888;
+          box-shadow: 0px 1px #888888;
+}
+
+nav ul a li {
+  padding: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: #08bfbf;
+  cursor: pointer;
+  color: white;
+  border: 1px #eceff1 solid;
+}
+
+form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  max-width: 1200px;
+  margin: 50px auto;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+form label {
+  font-family: Poppins-Regular;
+  font-size: 19px;
+  color: gray;
+  margin-right: 20px;
+}
+
+form input {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #b2b2b2;
+}
+
+.view .custom-table {
+  min-width: 900px;
+  margin: auto;
+}
+
+.view .custom-table thead tr,
+.view .custom-table thead th {
+  padding-bottom: 30px;
+  border-top: none;
+  border-bottom: none !important;
+  color: white;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  cursor: pointer;
+}
+
+.view .custom-table  th,
+.view .custom-table  td {
+  color: #c5c4c4;
+  font-weight: 400;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  font-weight: 300;
+  border: none;
+  -webkit-transition: 0.3s all ease;
+  transition: 0.3s all ease;
+  cursor: pointer;
+  padding: 15px;
+}
+
+.view .custom-table  th a,
+.view .custom-table  td a {
+  color: #c5c4c4;
+}
+
+.view .custom-table  tr {
+  -webkit-transition: 0.3s all ease;
+  transition: 0.3s all ease;
+}
+
+.view .custom-table  tr:hover td, .view .custom-table  tr:focus td {
+  color: white;
+}
+
+.view .custom-table  tr:hover td a, .view .custom-table  tr:focus td a {
+  color: #fdd114;
+}
+
+.view .custom-table  tr:hover td .more, .view .custom-table  tr:focus td .more {
+  color: #fdd114;
+}
+/*# sourceMappingURL=class.css.map */

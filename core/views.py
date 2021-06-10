@@ -1,23 +1,469 @@
+from django.core import exceptions
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Class, Course, Room, Student
+from .models import Class, Course, Room, Student, Week, ClassRoom
 from django.views import View
 import datetime
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
+# region Front handler
+
+def towf(rms, cls):
+    print("14 : 2")
+    list_cac_th = []
+    list_max = []
+    try:
+        for i in range(rms.count()):
+            if rms[i].capacity >= cls[0].number:
+                for j in range(rms.count()):
+                    if rms[j].capacity >= cls[1].number:
+                        list_cach = [
+                            [i,cls[0].duration],
+                            [j,cls[1].duration],
+                        ]
+                        tong = 0
+                        max = 0
+                        for o in range(rms.count()): # tính max tổng duration
+                            for p in list_cach:
+                                if o == p[0]:
+                                    tong += p[1]
+                            if max < tong:
+                                max = tong
+                            tong = 0
+                        list_max.append(max)
+                        list_cac_th.append([list_cach,max])
+    except:
+        print("lỗi towf()")
+    return list_cac_th, list_max
+
+def threef(rms, cls): # i j k l m
+    list_cac_th = []
+    list_max = []
+    try:
+        for i in range(rms.count()):
+            if rms[i].capacity >= cls[0].number:
+                for j in range(rms.count()):
+                    if rms[j].capacity >= cls[1].number:
+                        for k in range(rms.count()):
+                            if rms[k].capacity >= cls[2].number:          
+                                list_cach = [
+                                    [i,cls[0].duration],
+                                    [j,cls[1].duration],
+                                    [k,cls[2].duration],
+                                ]
+                                tong = 0
+                                max = 0
+                                for o in range(rms.count()): # tính max tổng duration
+                                    for p in list_cach:
+                                        if o == p[0]:
+                                            tong += p[1]
+                                    if max < tong:
+                                        max = tong
+                                    tong = 0
+                                list_max.append(max)
+                                list_cac_th.append([list_cach,max])
+
+    except:
+        print("lỗi threef()")
+    # print("list_cac_th, list_max :", list_cac_th, list_max)
+    return list_cac_th, list_max
+
+def fourf(rms, cls): # i j k l m
+    list_cac_th = []
+    list_max = []
+    try:
+        for i in range(rms.count()):
+            if rms[i].capacity >= cls[0].number:
+                for j in range(rms.count()):
+                    if rms[j].capacity >= cls[1].number:
+                        for k in range(rms.count()):
+                            if rms[k].capacity >= cls[2].number:
+                                for l in range(rms.count()):
+                                    if rms[l].capacity >= cls[3].number:
+                                        list_cach = [
+                                            [i,cls[0].duration],
+                                            [j,cls[1].duration],
+                                            [k,cls[2].duration],
+                                            [l,cls[3].duration],
+                                        ]
+                                        tong = 0
+                                        max = 0
+                                        for o in range(rms.count()): # tính max tổng duration
+                                            for p in list_cach:
+                                                if o == p[0]:
+                                                    tong += p[1]
+                                            if max < tong:
+                                                max = tong
+                                            tong = 0
+                                        list_max.append(max)
+                                        list_cac_th.append([list_cach,max])
+    except:
+        print("lỗi fourf()")
+    return list_cac_th, list_max
+
+def fivef(rms, cls): # i j k l m
+    print("95: 5")
+
+    list_cac_th = []
+    list_max = []
+    try:
+        for i in range(rms.count()):
+            if rms[i].capacity >= cls[0].number:
+                for j in range(rms.count()):
+                    if rms[j].capacity >= cls[1].number:
+                        for k in range(rms.count()):
+                            if rms[k].capacity >= cls[2].number:
+                                for l in range(rms.count()):
+                                    if rms[l].capacity >= cls[3].number:
+                                        for m in range(rms.count()):
+                                            if rms[m].capacity >= cls[4].number:
+                                                list_cach = [
+                                                    [i,cls[0].duration],
+                                                    [j,cls[1].duration],
+                                                    [k,cls[2].duration],
+                                                    [l,cls[3].duration],
+                                                    [m,cls[4].duration],
+                                                ]
+                                                tong = 0
+                                                max = 0
+                                                for o in range(rms.count()): # tính max tổng duration
+                                                    for p in list_cach:
+                                                        if o == p[0]:
+                                                            tong += p[1]
+                                                    if max < tong:
+                                                        max = tong
+                                                    tong = 0
+                                                list_max.append(max)
+                                                list_cac_th.append([list_cach,max])
+    except:
+        print("lỗi fivef()")
+    return list_cac_th, list_max
+
+#list_cac_th, list_max
+def sixf(rms, cls): # i j k l m
+    print("129: 6")
+    list_cac_th = []
+    list_max = []
+    try:
+        for i in range(rms.count()):
+            if rms[i].capacity >= cls[0].number:
+                for j in range(rms.count()):
+                    if rms[j].capacity >= cls[1].number:
+                        for k in range(rms.count()):
+                            if rms[k].capacity >= cls[2].number:
+                                for l in range(rms.count()):
+                                    if rms[l].capacity >= cls[3].number:
+                                        for m in range(rms.count()):
+                                            if rms[m].capacity >= cls[4].number:
+                                                for n in range(rms.count()):
+                                                    if rms[n].capacity >= cls[4].number:
+
+                                                        list_cach = [
+                                                            [i,cls[0].duration],
+                                                            [j,cls[1].duration],
+                                                            [k,cls[2].duration],
+                                                            [l,cls[3].duration],
+                                                            [m,cls[4].duration],
+                                                            [n,cls[5].duration],
+                                                        ]
+                                                        tong = 0
+                                                        max = 0
+                                                        for o in range(rms.count()): # tính max tổng duration
+                                                            for p in list_cach:
+                                                                if o == p[0]:
+                                                                    tong += p[1]
+                                                            if max < tong:
+                                                                max = tong
+                                                            tong = 0
+                                                        list_max.append(max)
+                                                        list_cac_th.append([list_cach,max])
+    except:
+        print("lỗi sixf()")
+    return list_cac_th, list_max
+
+def case(n, rms, cls):
+    switcher = {
+        2 : towf(rms, cls),
+        3 : threef(rms, cls),
+        4 : fourf(rms, cls),
+        5 : fivef(rms, cls),
+        6 : sixf(rms, cls)
+    }
+    return switcher.get(n,"nothing")
+
+#for5 cũ
+def xuly246357(rms, cls): # i j k l m
+    print("180  ",cls.count())
+    result = case(cls.count(),rms,cls)
+    list_cac_th = result[0]
+    list_max = result[1]
+    
+    m = min(list_max)
+    for i in list_cac_th:
+        if i[1] == m:
+            truong_hop_chon = i[0]
+            print( "cach xep phong :",i[0])
+            # tách ds index phòng
+            list_index_room = []
+            list_index_duration = []
+            # for j in range(len(i[0])):
+            #     list_index_room.append(i[0][j][0])
+            # print("ds room ",list_index_room)
+
+            for j in range(len(i[0])):
+                rm = rms[i[0][j][0]]
+                cl =  cls[j]
+                # print("index room :",i[0][j][0])
+                today = datetime.date.today() # .day.weekday() # thứ 2 -> cn = 0 -> 6
+                dtt = datetime.timedelta(days= 7 * i[0][j][1] ) # delta time
+
+                if list_index_room.count(i[0][j][0]) == 0:
+                    list_index_room.append(i[0][j][0])
+                    list_index_duration.append(i[0][j][1])
+                    weeks = Week.objects.filter(Q(start__lt = today + dtt) & Q(start__gt = today) ).order_by("-end") # giảm dần
+                    for w in weeks:
+                        clrm, created = ClassRoom.objects.get_or_create(
+                            weekID = w,
+                            roomID = rm,
+                            classID = cl,
+                            defaults={
+                                "day" :cl.day
+                            }
+                        )
+                else:
+                    dem = 0
+                    for l in range(len(list_index_room)):
+                        if list_index_room[l] == i[0][j][0]:
+                            dem += list_index_duration[l]
+                    # print("list_index_room ", list_index_room)
+                    # print("list_index_duration",list_index_duration)
+                    # print("dem", dem)
+                    list_index_room.append(i[0][j][0])
+                    list_index_duration.append(i[0][j][1])
+                    today = datetime.date.today() # .day.weekday() # thứ 2 -> cn = 0 -> 6
+                    dtt = datetime.timedelta(days= 7 * dem ) # delta time
+                    print(dtt) # tạo weeeks nếu chưa đủ tuần
+                    weeks = Week.objects.filter(Q(start__gt = today + dtt) & Q(start__lt = today + dtt + datetime.timedelta(days= 7 * i[0][j][1] )) ).order_by("-end") # giảm dần
+                    for w in weeks:
+                        clrm, created = ClassRoom.objects.get_or_create(
+                            weekID = w,
+                            roomID = rm,
+                            classID = cl,
+                            defaults={
+                                "day" :cl.day
+                            }
+                        )
+
+            break
+
+    return truong_hop_chon
+
+
+def for6(rms, cls): # i j k l m
+    list_cac_th = []
+    list_max = []
+    for i in range(rms.count()):
+        if rms[i].capacity >= cls[0].number:
+            for j in range(rms.count()):
+                if rms[j].capacity >= cls[1].number:
+                    for k in range(rms.count()):
+                        if rms[k].capacity >= cls[2].number:
+                            for l in range(rms.count()):
+                                if rms[l].capacity >= cls[3].number:
+                                    for m in range(rms.count()):
+                                        if rms[m].capacity >= cls[4].number:
+                                            for n in range(rms.count()):
+                                                if rms[n].capacity >= cls[4].number:
+
+                                                    list_cach = [
+                                                        [i,cls[0].duration],
+                                                        [j,cls[1].duration],
+                                                        [k,cls[2].duration],
+                                                        [l,cls[3].duration],
+                                                        [m,cls[4].duration],
+                                                        [n,cls[5].duration],
+                                                    ]
+                                                    tong = 0
+                                                    max = 0
+                                                    for o in range(rms.count()): # tính max tổng duration
+                                                        for p in list_cach:
+                                                            if o == p[0]:
+                                                                tong += p[1]
+                                                        if max < tong:
+                                                            max = tong
+                                                        tong = 0
+                                                    list_max.append(max)
+                                                    list_cac_th.append([list_cach,max])
+
+    m = min(list_max)
+    for i in list_cac_th:
+        if i[1] == m:
+            truong_hop_chon = i[0]
+            # print(i[0])
+            # print(len(i[0]))
+            # tách ds index phòng
+            list_index_room = []
+            list_index_duration = []
+            # for j in range(len(i[0])):
+            #     list_index_room.append(i[0][j][0])
+            # print("ds room ",list_index_room)
+
+            for j in range(len(i[0])):
+                rm = rms[i[0][j][0]]
+                cl =  cls[j]
+                # print("index room :",i[0][j][0])
+                today = datetime.date.today() # .day.weekday() # thứ 2 -> cn = 0 -> 6
+                dtt = datetime.timedelta(days= 7 * i[0][j][1] ) # delta time
+
+                if list_index_room.count(i[0][j][0]) == 0:
+                    list_index_room.append(i[0][j][0])
+                    list_index_duration.append(i[0][j][1])
+                    weeks = Week.objects.filter(Q(start__lt = today + dtt) & Q(start__gt = today) ).order_by("-end") # giảm dần
+                    for w in weeks:
+                        clrm, created = ClassRoom.objects.get_or_create(
+                            weekID = w,
+                            roomID = rm,
+                            classID = cl,
+                            defaults={
+                                "day" :cl.day
+                            }
+                        )
+                else:
+                    dem = 0
+                    for l in range(len(list_index_room)):
+                        if list_index_room[l] == i[0][j][0]:
+                            dem += list_index_duration[l]
+                    # print("list_index_room ", list_index_room)
+                    # print("list_index_duration",list_index_duration)
+                    # print("dem", dem)
+                    list_index_room.append(i[0][j][0])
+                    list_index_duration.append(i[0][j][1])
+                    today = datetime.date.today() # .day.weekday() # thứ 2 -> cn = 0 -> 6
+                    dtt = datetime.timedelta(days= 7 * dem ) # delta time
+                    # print(dtt) # tạo weeeks nếu chưa đủ tuần
+                    weeks = Week.objects.filter(Q(start__gt = today + dtt) & Q(start__lt = today + dtt + datetime.timedelta(days= 7 * i[0][j][1] )) ).order_by("-end") # giảm dần
+                    for w in weeks:
+                        clrm, created = ClassRoom.objects.get_or_create(
+                            weekID = w,
+                            roomID = rm,
+                            classID = cl,
+                            defaults={
+                                "day" :cl.day
+                            }
+                        )
+
+            break
+    return truong_hop_chon
+
+# index phòng và giá trị thời lượng học min
+def tim_thoi_luong_hoc_min(list_cac_th,cls):
+
+    rms = Room.objects.filter(status = 'W' ).order_by("capacity") # tăng dần
+    list_tong_tg = []
+    for j in range(rms.count()):
+        tong_tg = 0
+        for i in list_cac_th: # [[[index_room, thoigiancho]], tong thoi gian cho]
+            if int(i[0]) == j:
+                tong_tg += int(i[1])
+        list_tong_tg.append(tong_tg)
+
+
+    index_min = -1
+    min = 1000
+    # index_min = 0
+    # min = list_tong_tg[index_min]
+    for i in range(len(list_tong_tg)):
+        if list_tong_tg[i] < min and cls.number <= rms[i].capacity:
+            print("so hs va so cho ngoi :",cls.number, " va ",rms[i].capacity)
+            min = list_tong_tg[i]
+            index_min = i
+    print("index_min, min :",index_min, min)
+    return index_min, min
+
+
+# xếp lớp full tuần
+def xulyfullweek():
+    rms = Room.objects.filter(status = 'W' ).order_by("capacity") # tăng dần
+
+    cls1 = Class.objects.filter(day = "MWF").order_by("duration")
+    cls2 = Class.objects.filter(day = "TTS").order_by("duration")
+    cls3 = Class.objects.filter(day="F").order_by("duration")
+
+    list_th1 = []
+    list_th2 = []
+
+    print("===========")
+    print("dem so lop 2 4 6: ",cls1.count())
+    print("dem so lop 3 5 7: ",cls2.count())
+    print("===========")
+    
+    list_th1 = xuly246357(rms,cls1)
+    list_th2 = xuly246357(rms,cls2)
+
+    print("truong hop xep lop 2 6 4 ",list_th1)
+    print("truong hop xep lop 3 5 7 ",list_th2)
+    
+    if cls3.count() == 1:
+        time1 = tim_thoi_luong_hoc_min(list_th1,cls3[0]) # [index_room1, waiting]
+        time2 = tim_thoi_luong_hoc_min(list_th2,cls3[0]) # [index_room2, waiting]
+
+        print("(2 4 6)[phong hoc, thoi gian cho] :" ,time1)
+        print("(3 5 7)[phong hoc, thoi gian cho] :" ,time2)
+
+        if time1[1] < time2[1]:
+            waiting = time2[1] 
+        else:
+            waiting = time1[1]
+
+        room_index1 = time1[0] 
+        room_index2 = time2[0] 
+
+        print("=========")
+        print("index room :" ,rms[room_index1], " và ",rms[room_index2])
+        print("số tuần chờ : ", waiting)
+        print("=========")
+
+        today = datetime.date.today() # .day.weekday() # thứ 2 -> cn = 0 -> 6
+        dtt = datetime.timedelta(days = 7 * waiting ) # delta time
+        weeks = Week.objects.filter(Q(start__gt = today + dtt) & Q(start__lt = today + dtt + datetime.timedelta(days= 7 * int(cls3[0].duration) )) ).order_by("-end") # giảm dần
+        for w in weeks:
+            ClassRoom.objects.get_or_create(classID = cls3[0], roomID = rms[room_index1], weekID = w, day = "MWF")
+            ClassRoom.objects.get_or_create(classID = cls3[0], roomID = rms[room_index2], weekID = w, day = "TTS")
+    
+
+# endregion
+# tạo tuần
+# def taotuan():
+#     dtt = datetime.timedelta(days= 6) # delta time
+#     st = datetime.date(2021,6,7)
+#     ed = st + dtt
+#     for i in range(50):
+#         w, created = Week.objects.get_or_create(start = st, end = ed)
+#         st = ed + datetime.timedelta(days= 1)
+#         ed = ed + datetime.timedelta(days= 7)
+
 
 # Create your views here.
-
+@login_required
 def index(request):
-    dem_so_hoc_sinh()
-    cls = Class.objects.all()
-    room = Room.objects.filter(status = 'W' )
+    clrms = ClassRoom.objects.all().delete()
+    # dem_so_hoc_sinh()
+    xulyfullweek()
+
+    room = Room.objects.filter(status = 'W' ) # tăng dần
+    cls = Class.objects.all().order_by("duration")
+
     course = Course.objects.filter()
+    clrms = ClassRoom.objects.all()
     context = {
         'classes': cls,
         'rooms': room,
-        'courses': course
+        'courses': course,
+        'clrms': clrms,
     }
-    return render(request, 'core/index.html', context)
+    return render(request, 'core/index_2.html', context)
 
 def dem_so_hoc_sinh():
     cls = Class.objects.filter(Q(status="LOCKED") | Q(status = "WAITING"))
@@ -26,178 +472,54 @@ def dem_so_hoc_sinh():
        cl.save()
     return 1
 
-def get_start_and_end_day(ds_room_trong,cl):
-    for i in ds_room_trong:
-        if int(i.capacity) >= int(cl.number):
-            cl.room = i
-            d = datetime.date.today().weekday() # 0 - 6 là thứ 2 - cn
-            if cl.day.find('MWF') != -1 :
-                if d == 0 or d == 2 or d == 5:
-                    cl.start_day = datetime.date.today() + datetime.timedelta(days=2)
-                elif d == 1 or d == 3:
-                    cl.start_day = datetime.date.today() + datetime.timedelta(days=1)
-                else:
-                    cl.start_day = datetime.date.today() + datetime.timedelta(days=3)
-
-                dem = int(cl.course.duration)
-                day = cl.start_day
-                d1 = day.weekday()
-                while dem > 0:
-                    if d1 == 0 or d1 == 2 or d1 == 4:
-                        dem -= 1
-                    day += datetime.timedelta(days=1)
-                    d1 = day.weekday()
-                cl.end_day = day - datetime.timedelta(days=1)
-
-            elif cl.day.find('TTS') != -1 :
-                if d == 0 or d == 2 or d == 4:
-                    cl.start_day = datetime.date.today() + datetime.timedelta(days=1)
-                elif d == 1 or d == 3:
-                    cl.start_day = datetime.date.today() + datetime.timedelta(days=2)
-                else:
-                    cl.start_day = datetime.date.today() + datetime.timedelta(days=3)
-                
-                dem = int(cl.course.duration)
-
-                day = cl.start_day
-                d1 = day.weekday()
-                while dem >= 0:
-                    if d1 == 1 or d1 == 3 or d1 == 5:
-                        dem -= 1
-                    day += datetime.timedelta(days=1)
-                    d1 = day.weekday()
-                cl.end_day = day- datetime.timedelta(days=1)
-
-            else:
-                if d == 5:
-                    cl.start_day = datetime.date.today() + datetime.timedelta(days=2)
-                else:
-                    cl.start_day = datetime.date.today() + datetime.timedelta(days=1)
-                
-                dem = int(cl.course.duration)
-                day = cl.start_day
-                d1 = day.weekday()
-                while dem > 0:
-                    if d1 != 6:
-                        dem -= 1
-                    day += datetime.timedelta(days=1)
-                    d1 = day.weekday()
-                cl.end_day = day - datetime.timedelta(days=1)
-    print(cl.start_day)
-    return cl
-
 
 def xuLyXepLich(cl):
-    # đưa 1 lớp (cl) mới vào xử lý return start_day, end_day và room
+    # đưa 1 lớp (cl) mới vào xử lý
 
-    rms = Room.objects.filter(status = "W").order_by('capacity') # sort tăng dần
-    # những lớp cùng ca học và không có lớp nào sau khi lớp đó kết thúc
-    cls_trung_ca_hoc_cuoi_cung = Class.objects.filter(day = cl.day, end = True).order_by('end_day')
-
-    # test
-    # cls_trung_day = Class.objects.all().order_by('end_day')
-    # for i in cls_trung_day:
-    #     print(i.end_day)
-    # return HttpResponse(cls_trung_day)
-
-    print("88 bd xu ly")
-    # kiểm tra có full phòng vào thời điểm đó hay chưa
-
-    if cls_trung_ca_hoc_cuoi_cung.count() == rms.count():
-        print("33, if dung")
-        # tìm lớp nào sắp kết thúc và phòng chứa đủ học sinh
-        # CHƯA TÍNH ĐẾN VIỆC ĐỔI PHÒNG
-        # loại trừ các lớp chưa có phòng
-        n = 0
-        i = cls_trung_ca_hoc_cuoi_cung[n]
-        soLuongChoNgoi = i.room.capacity
-        while int(soLuongChoNgoi) < int(cl.number):
-            n += 1
-            i = cls_trung_ca_hoc_cuoi_cung[n]
-            soLuongChoNgoi = i.room.capacity
-
-        cl.room = i.room
-        i.end = False
-        i.save()
-        # d = datetime.date.today().weekday() # 0 - 6 là thứ 2 - cn
-        d = i.end_day.weekday()
-        if cl.day.find('MWF') != -1 :
-            if d == 4:
-                cl.start_day = i.end_day + datetime.timedelta(days=3)
-            else:
-                cl.start_day = i.end_day + datetime.timedelta(days=2)
-            
-            so_buoi_hoc = int(cl.course.duration)
-            day = cl.start_day
-            d1 = day.weekday()
-            while so_buoi_hoc > 0:
-                if d1 == 0 or d1 == 2 or d1 == 4:
-                    so_buoi_hoc -= 1
-                day += datetime.timedelta(days=1)
-                d1 = day.weekday()
-            cl.end_day = day - datetime.timedelta(days=1)
-
-        elif cl.day.find('TTS') != -1 :
-            if d == 5:
-                cl.start_day = i.end_day + datetime.timedelta(days=3)
-            else:
-                cl.start_day = i.end_day + datetime.timedelta(days=2)
-            
-            so_buoi_hoc = int(cl.course.duration)
-            day = cl.start_day
-            d1 = day.weekday()
-            while so_buoi_hoc > 0:
-                if d1 == 1 or d1 == 3 or d1 == 5:
-                    so_buoi_hoc -= 1
-                day += datetime.timedelta(days=1)
-                d1 = day.weekday()
-            cl.end_day = day - datetime.timedelta(days=1)
-
-        else:
-            if d == 5:
-                cl.start_day = i.end_day + datetime.timedelta(days=2)
-            else:
-                cl.start_day = i.end_day + datetime.timedelta(days=1)
-            
-            so_buoi_hoc = int(cl.course.duration)
-            day = cl.start_day
-            d1 = day.weekday()
-            while so_buoi_hoc > 0:
-                if d1 != 6:
-                    so_buoi_hoc -= 1
-                day += datetime.timedelta(days=1)
-                d1 = day.weekday()
-            cl.end_day = day - datetime.timedelta(days=1)
-    else:
-        print("45, if sai")
-        dem = 0
-        ds_room_trong = []
-        for r in rms:
-            for cls_trung in cls_trung_ca_hoc_cuoi_cung:
-                if cls_trung.room == r:
-                    dem += 1
-            if dem == 0:
-                ds_room_trong.append(r)
-            else:
-                dem = 0
-
-        # xếp phòng, tính startday và endday
-        cl = get_start_and_end_day(ds_room_trong, cl)
-
-    print("62,save")
-    cl.status = "LOCKED"
-    cl.end = True
-    cl.save()
-    return HttpResponse(cl.name)
+    today = datetime.date.today() # .day.weekday() # thứ 2 -> cn = 0 -> 6
+    dtt = datetime.timedelta(days=7) # delta time
+    weeks = Week.objects.all().order_by("-end") # giảm dần
 
 
+
+    # last = weeks[0].end # vd 13
+    # s = last + datetime.timedelta(days=1) # 14
+    # e = last + datetime.timedelta(days=7) # 20
+
+    # print("last ", last)
+    # print("cls[0].duration ", cls[0].duration)
+    # # tạo số tuần tương ứng
+    # for i in range(1, cls[0].duration + 1):
+    #     if today + dtt*i > weeks[0].end:
+    #         new_week = Week.objects.create(start = s, end = e)
+    #         s = e + datetime.timedelta(days=1) # 21
+    #         e += datetime.timedelta(days=7) # 27
+    #         print("create week ", new_week , "sucess")
+
+    # lấy những lớp có duration lớn nhất ra, bỏ những lớp ít nhất vào
+
+    # SORT DS LỚP THEO DURATION TĂNG DẦN
+    # cls = Class.objects.all().order_by('-duration') # ??? 7
+    # rms = Room.objects.all().order_by("-capacity") # ???
+
+    # for i in range(0,rms.count()):
+
+
+
+
+def detail_class(request, pk):
+    cl = Class.objects.get(pk = pk)
+    stds = cl.students.all()
+    context = {
+        'class':cl,
+        'students':stds,
+    }
+    return render(request, 'core/detail_class.html', context)
+
+@method_decorator(login_required(), name='dispatch')
 class Classes(View):
 
     def get(self,request):
-        lop_chua_co_phong = Class.objects.filter(room = None)
-        for i in lop_chua_co_phong:
-            xuLyXepLich(i)
-        dem_so_hoc_sinh()
         cl = Class.objects.all()
         course = Course.objects.filter()
         context = {
@@ -206,15 +528,13 @@ class Classes(View):
         }
         return render(request, 'core/class_view.html', context)
 
-    def post(self, request, *args, **kwargs):  
-        print("b",request)
+    def post(self, request, *args, **kwargs):
         form = request.POST
-        print(form['iId'])
         course = Course.objects.get(id = form['courses'])
+        duration = course.duration
         if "add_class" in form:
             try:
-                cl = Class.objects.create(slug = form['slug'],name = form['name'],number = form['number'], course = course, day = form['schedule'])
-                xuLyXepLich(cl)
+                cl = Class.objects.create(slug = form['slug'],name = form['name'],number = form['number'], course = course, day = form['schedule'], duration = duration)
             except:
                 return HttpResponse("lỗi thêm khoá học")
         elif "update_class" in form:
@@ -238,7 +558,7 @@ class Classes(View):
         return redirect("classes")
         # return render(request, 'core/class_view.html', context)
 
-
+@method_decorator(login_required(), name='dispatch')
 class Courses(View):
 
     def get(self,request):
@@ -247,7 +567,7 @@ class Courses(View):
             'courses':courses
         }
         return render(request, 'core/course_view.html', context)
-    
+
     def post(self,request,*args, **kwargs):
         form = request.POST
         try:
@@ -256,8 +576,9 @@ class Courses(View):
             return HttpResponse("lỗi thêm khoá học")
         return redirect("courses")
 
-
+@method_decorator(login_required(), name='dispatch')
 class Rooms(View):
+
 
     def get(self, request):
         rooms = Room.objects.all()
@@ -274,8 +595,9 @@ class Rooms(View):
             return HttpResponse("lỗi thêm khoá học")
         return redirect("rooms")
 
-
+@method_decorator(login_required(), name='dispatch')
 class Students(View):
+
 
     def get(self, request):
         students = Student.objects.all()
@@ -290,7 +612,7 @@ class Students(View):
     def post(self, request):
         form = request.POST
         classes = Class.objects.filter(Q(status="LOCKED") | Q(status = "WAITING"))
-        
+
         list_lop_day = []
         flag_phong_day = False
 
@@ -318,11 +640,11 @@ class Students(View):
             except:
                 return HttpResponse("lỗi thêm học sinh")
             if flag_phong_day == True:
-                text = '' 
+                text = ''
                 for i in list_lop_day:
                     text += ', '+i
                 return HttpResponse("phòng của lớp ", text , ' đã đầy')
-        
+
         elif 'update_student' in form:
             try:
                 std = Student.objects.get(id = form['sId'])
@@ -352,7 +674,7 @@ class Students(View):
             except:
                 return HttpResponse("lỗi sửa học sinh")
             if flag_phong_day == True:
-                text = '' 
+                text = ''
                 for i in list_lop_day:
                     text += ', '+i
                 return HttpResponse("phòng của lớp ", text , ' đã đầy')
@@ -365,29 +687,9 @@ class Students(View):
         return redirect("students")
 
 
-# def a(list_l, list_r):
-#     result = []
-#     for j in list_l:
-#         for i in list_r:
-#             if result.find(i) == -1 and result.find(j) == -1:
-#                 if i.cp >= j.number:
-#                     j.room = i
-#                     result.append({"room":i,"class":j})
-#     return result
 
-# def optimal(n, cls, rms, nc):
-#     rs = a(cls,rms)
-#     if len(rs) == len(cls):
-#         for r in rs:
-#             cl = r['class']
-#             rm = r['room']
-#             cl.room = rm
-#             cl.save()
-#     elif cls[n+1].room.capycity >= nc.number :
-#         nc.room = Room.objects.get(cls[n+1].room)
-#     else:
-#         cl = []
-#         n += 1
-#         for i in range(n, len(cls)):
-#             cl.append(rms[i])
-#         optimal(n,cl,rms,nc)
+
+
+    
+
+

@@ -1,0 +1,42 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}
+Dashboard scheduling
+{% endblock title %}
+
+{% block script %}
+{% endblock script %}
+
+{% block content %}
+<div class="detail-class">
+    <h2>Chi tiết lớp:</h2>
+    <p>Mã : {{class.slug}}</p>
+    <p>Tên : {{class.name}}</p>
+    <p>Khoá học: {{class.course}}</p>
+    <p>Buổi học: {{class.day}}</p>
+    <p>Ngày bắt đầu: {{class.start_day}}</p>
+    <p>Ngày kết thúc: {{class.end_day}}</p>
+    <p>Sĩ số: {{class.number_student}}/{{class.number_student}}</p>
+</div>
+
+
+<br>
+<h2>Danh sách học sinh</h2>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Tên</th>
+        <th>Ngày tháng năm sinh</th>
+    </tr>
+    
+    {% for std in students %}
+        <tr>
+            <td>{{std.id}}</td>
+            <td>{{std.name}}</td>
+            <td>{{std.birth}}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock content %}

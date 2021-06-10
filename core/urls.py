@@ -9,7 +9,8 @@ urlpatterns = [
     path('courses/', Courses.as_view(), name="courses"),
     path('rooms/', Rooms.as_view(), name="rooms"),
     path('students/', Students.as_view(), name="students"),
-    path('login/',auth_views.LoginView.as_view(template_name="core/login.html"), name="login"),
+    path('accounts/login/',auth_views.LoginView.as_view(template_name="core/login.html"), name="login"),
     path('logout/',auth_views.LogoutView.as_view(next_page='/'),name='logout'),
+    path('class/<int:pk>/', views.detail_class, name="detail_class")
     # path('xuly/', views.xuLyXepLich, name="xuly"),
 ]

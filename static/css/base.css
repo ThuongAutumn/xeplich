@@ -1,83 +1,122 @@
+@charset "UTF-8";
+html,
+body {
+  max-width: 100vw;
+  overflow: hidden;
+  font-family: "Karla";
+  color: #546e7a;
+}
+
 * {
-  padding: 0;
-  margin: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.container nav {
-  margin: 50px auto;
-  margin-bottom: 100px;
+header {
+  height: 100px;
+  background-color: #08bfbf;
 }
 
-.container nav ul {
-  list-style: none;
+header .container {
+  margin: auto;
+  max-width: 1400px;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+}
+
+header .container .logo {
+  margin-right: 1150px;
+  height: 100%;
+  width: 100px;
+}
+
+header .container .logo img {
+  width: 100%;
+  height: 100%;
+}
+
+header .container .user {
+  height: 100%;
+  width: 100px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+header .container .user a svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: pointer;
+}
+
+header .container .user a .avt {
+  margin-right: 45px;
+}
+
+header .container .user a .userName {
+  position: absolute;
+  right: 105px;
+}
+
+header .container .user a .log-out {
+  position: absolute;
+  right: 40px;
+}
+
+header .container .user a p {
+  cursor: pointer;
+  bottom: 4px;
+  color: black;
+}
+
+nav {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  margin-bottom: 45px;
+  margin-top: 20px;
 }
 
-.container nav ul li {
-  text-transform: uppercase;
-  font-size: 24px;
-  color: #4949bb;
-  padding: 20px;
-  background-color: #e2e2e2;
-  cursor: pointer;
-}
-
-.container nav ul li:hover {
-  color: #e2e2e2;
-  background-color: #4949bb;
-}
-
-.container .calendar {
+nav ul {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-
-.container .calendar ul {
-  margin: 0 auto;
   list-style: none;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
 }
 
-.container .calendar ul:nth-child(1) li:nth-child(1) {
+nav ul a {
+  text-decoration: none;
+}
+
+nav ul a:hover {
+  text-decoration: underline;
+}
+
+nav ul a:hover li {
   background-color: white;
-  cursor: auto;
+  color: #5c5c0a;
+  -webkit-box-shadow: 0px 1px #888888;
+          box-shadow: 0px 1px #888888;
 }
 
-.container .calendar ul li {
-  text-transform: uppercase;
-  font-size: 24px;
-  color: #4949bb;
+nav ul a li {
   padding: 20px;
-  background-color: #e2e2e2;
-  cursor: pointer;
-  height: 65px;
   text-align: center;
-  max-width: 180px;
-  width: 180px;
-  border: 1px red solid;
-  overflow: hidden;
+  text-transform: uppercase;
+  background-color: #08bfbf;
+  cursor: pointer;
+  color: white;
+  border: 1px #eceff1 solid;
 }
-
-.container .calendar ul li:hover {
-  color: #e2e2e2;
-  background-color: #4949bb;
-}
-/*# sourceMappingURL=style.css.map */
