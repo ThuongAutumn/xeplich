@@ -506,7 +506,6 @@ def xuLyXepLich(cl):
 
 
 
-
 def detail_class(request, pk):
     cl = Class.objects.get(pk = pk)
     stds = cl.students.all()
@@ -598,7 +597,6 @@ class Rooms(View):
 @method_decorator(login_required(), name='dispatch')
 class Students(View):
 
-
     def get(self, request):
         students = Student.objects.all()
         classes = Class.objects.filter(Q(status="LOCKED") | Q(status = "WAITING"))
@@ -621,8 +619,7 @@ class Students(View):
                 st = Student.objects.create(name = form['name'], birth = form['birth'])
                 for cl in classes:
                     print("count ",cl.students.all().count())
-                    print("count ",cl.room.capacity)
-                    if cl.students.all().count() < cl.room.capacity:
+                    if cl.students.all().count() <= cl.number:
                         try:
                             s = str(cl.id)
                             value = form[s]
@@ -638,6 +635,7 @@ class Students(View):
                         list_lop_day.append(cl.slug)
                 st.save()
             except:
+
                 return HttpResponse("lỗi thêm học sinh")
             if flag_phong_day == True:
                 text = ''
