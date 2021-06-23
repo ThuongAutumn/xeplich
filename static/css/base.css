@@ -2,7 +2,7 @@
 html,
 body {
   max-width: 100vw;
-  overflow: hidden;
+  overflow-x: hidden;
   font-family: "Karla";
   color: #546e7a;
 }
@@ -42,7 +42,7 @@ header .container .logo img {
 
 header .container .user {
   height: 100%;
-  width: 100px;
+  width: 125px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -60,6 +60,19 @@ header .container .user a svg {
 
 header .container .user a .avt {
   margin-right: 45px;
+}
+
+header .container .user a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+header .container .user a:first-child {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin-right: 33px;
 }
 
 header .container .user a .userName {

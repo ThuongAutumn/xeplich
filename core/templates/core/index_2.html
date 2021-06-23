@@ -39,7 +39,7 @@ scheduling {% endblock title %} {% block script %}
 
     function loadData(){
         {% for clrm in clrms %}
-            standard.push([`{{clrm.classID}}`,`{{clrm.roomID}}`,`{{clrm.weekID.start}}`,`{{clrm.weekID.end}}`,`{{clrm.day}}`])
+            standard.push([`{{clrm.classID}}`,`{{clrm.roomID}}`,`{{clrm.weekID.start}}`,`{{clrm.weekID.end}}`,`{{clrm.day}}`,`{{clrm.classID.id}}`])
         {% endfor %}
         var text = JSON.stringify(standard,undefined,0)
         console.log(text)
@@ -70,7 +70,7 @@ scheduling {% endblock title %} {% block script %}
         $(`.week-names > .${i} > p`).remove();
     }
 
-    $(`.abc > p`).remove();
+    $(`.abc > a`).remove();
 
     dateSubtraction();
     checkSameWeek();
@@ -82,7 +82,7 @@ scheduling {% endblock title %} {% block script %}
         $(`.week-names > .${i} > p`).remove();
     }
 
-    $(`.abc > p`).remove();
+    $(`.abc > a`).remove();
 
     getNow();
     checkSameWeek();
@@ -93,7 +93,7 @@ scheduling {% endblock title %} {% block script %}
         $(`.week-names > .${i} > p`).remove();
     }
 
-    $(`.abc > p`).remove();
+    $(`.abc > a`).remove();
 
     dateAddition();
 
@@ -442,19 +442,15 @@ scheduling {% endblock title %} {% block script %}
 
         switch (schedule) {
             case "MWF":
-            $(`.day_1.full_${standard[i][1][6]}`).append(`<p>${standard[i][0]}<p/>`);
-
-            $(`.day_3.full_${standard[i][1][6]}`).append(`<p>${standard[i][0]}<p/>`);
-
-            $(`.day_5.full_${standard[i][1][6]}`).append(`<p>${standard[i][0]}<p/>`);
+            $(`.day_1.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
+            $(`.day_3.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
+            $(`.day_5.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
             break;
 
             case "TTS":
-            $(`.day_2.full_${standard[i][1][6]}`).append(`<p>${standard[i][0]}<p/>`);
-
-            $(`.day_4.full_${standard[i][1][6]}`).append(`<p>${standard[i][0]}<p/>`);
-
-            $(`.day_6.full_${standard[i][1][6]}`).append(`<p>${standard[i][0]}<p/>`);
+            $(`.day_2.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
+            $(`.day_4.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
+            $(`.day_6.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
             break;
             break;
 

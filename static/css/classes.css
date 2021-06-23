@@ -67,14 +67,14 @@ header .container .user .avt {
 
 header .container .user .userName {
   position: absolute;
-  bottom: -12px;
+  bottom: 0px;
   right: 105px;
   cursor: pointer;
 }
 
 header .container .user .log-out {
   position: absolute;
-  bottom: -12px;
+  bottom: 0px;
   right: 40px;
   cursor: pointer;
 }

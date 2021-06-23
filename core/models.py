@@ -49,11 +49,6 @@ class Course(models.Model):
         return self.name
 
 
-class Shift(models.Model):
-    day = models.CharField(choices=SCHEDULE_CHOICES, max_length=4) # buổi học
-
-    def __str__(self) -> str:
-        return self.day
 
 class Class(models.Model):
     slug = models.SlugField(max_length=30,default='')
