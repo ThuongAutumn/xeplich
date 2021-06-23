@@ -9,7 +9,7 @@ Dashboard scheduling
 
 {% endblock script %}
 
-{% block content %}
+{% block contain %}
 <form name="formcourse" action="" method="post">
     {% csrf_token %}
     <label for="">Tên Khoá học:</label>
@@ -53,4 +53,4 @@ Dashboard scheduling
         table_view.insertAdjacentHTML('beforeend',text)
     }
 </script>
-{% endblock content %}
+{% endblock contain %}

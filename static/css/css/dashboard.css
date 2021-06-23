@@ -47,8 +47,10 @@ body {
 
 .dashboard-wrapper .btn-manage .btnn:active {
   background-color: #f96;
-  -webkit-box-shadow: inset 1.5px 1.5px 1.5px #cdcdcd, inset -1.5px -1.5px 1.5px #fafafa;
-          box-shadow: inset 1.5px 1.5px 1.5px #cdcdcd, inset -1.5px -1.5px 1.5px #fafafa;
+  -webkit-box-shadow: inset 1.5px 1.5px 1.5px #cdcdcd,
+ inset -1.5px -1.5px 1.5px #fafafa;
+          box-shadow: inset 1.5px 1.5px 1.5px #cdcdcd,
+ inset -1.5px -1.5px 1.5px #fafafa;
 }
 
 .dashboard-wrapper .btn-manage .pre {
@@ -73,18 +75,18 @@ body {
 }
 
 .dashboard-wrapper table tbody tr {
-  background-color: #555;
+  background-color: rgb(167, 167, 167);
 }
 
 .dashboard-wrapper table tbody tr:nth-child(odd) {
-  background-color: #777;
+  background-color: rgb(199, 199, 199);
 }
 
 .dashboard-wrapper table tbody tr th {
   text-transform: capitalize;
   text-align: center;
   padding: 5px 10px;
-  background-color: #333;
+  background-color: rgb(116, 116, 116);
   color: #fff;
   min-width: 130px;
   border-right: 1px solid #000;
