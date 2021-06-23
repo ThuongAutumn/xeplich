@@ -463,7 +463,7 @@ def index(request):
         'courses': course,
         'clrms': clrms,
     }
-    return render(request, 'core/index_2.html', context)
+    return render(request, 'core/dashboard.html', context)
 
 def dem_so_hoc_sinh():
     cls = Class.objects.filter(Q(status="LOCKED") | Q(status = "WAITING"))
