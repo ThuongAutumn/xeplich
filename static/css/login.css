@@ -8,7 +8,7 @@
 
 body {
   background-size: cover;
-  background-image: url("{% static 'img/loginBackground.jpg' %}");
+  background-image: url("/static/img/loginBackground.jpg");
 }
 
 @-webkit-keyframes spinner {

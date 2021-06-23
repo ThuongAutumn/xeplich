@@ -4,7 +4,7 @@ from .views import Classes, Courses, Rooms, Students
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('', views.index),
+    path('', views.index, name='index'),
     path('classes/', Classes.as_view(),name="classes"),
     path('courses/', Courses.as_view(), name="courses"),
     path('rooms/', Rooms.as_view(), name="rooms"),
