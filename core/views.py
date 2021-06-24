@@ -448,9 +448,10 @@ def xulyfullweek():
 # Create your views here.
 @login_required
 def index(request):
-    clrms = ClassRoom.objects.all().delete()
-    # dem_so_hoc_sinh()
-    xulyfullweek()
+
+    # clrms = ClassRoom.objects.all().delete()
+    # # dem_so_hoc_sinh()
+    # xulyfullweek()
 
     room = Room.objects.filter(status = 'W' ) # tăng dần
     cls = Class.objects.all().order_by("duration")
@@ -463,7 +464,7 @@ def index(request):
         'courses': course,
         'clrms': clrms,
     }
-    return render(request, 'core/index_2.html', context)
+    return render(request, 'core/dashboard.html', context)
 
 def dem_so_hoc_sinh():
     cls = Class.objects.filter(Q(status="LOCKED") | Q(status = "WAITING"))
@@ -554,6 +555,10 @@ class Classes(View):
                 # XOÁ XONG THÌ PHẢI UPDATE LẠI PHÒNG HỌC VÀ NGÀY BĐ HỌC CÁC KHOÁ SAU NÓ NẾU CÓ
             except:
                 return HttpResponse("Lỗi xoá")
+        
+        clrms = ClassRoom.objects.all().delete()
+        # dem_so_hoc_sinh()
+        xulyfullweek()
         return redirect("classes")
         # return render(request, 'core/class_view.html', context)
 

@@ -1,0 +1,152 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  color: #fa0;
+}
+
+.dashboard-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 100vh;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.dashboard-wrapper .btn-manage {
+  position: relative;
+  width: 1040.5px;
+  height: 50px;
+}
+
+.dashboard-wrapper .btn-manage .btnn {
+  cursor: pointer;
+  text-transform: capitalize;
+  position: absolute;
+  padding: 5px;
+  background-color: #fa7;
+  color: #000;
+  font-weight: 700;
+  border: 1px solid #000;
+  border-radius: 6px;
+  text-align: center;
+  -webkit-box-shadow: 3px 3px 3px #3b3a3a, -3px -3px 3px #3b3a3a;
+          box-shadow: 3px 3px 3px #3b3a3a, -3px -3px 3px #3b3a3a;
+}
+
+.dashboard-wrapper .btn-manage .btnn:active {
+  background-color: #f96;
+  -webkit-box-shadow: inset 1.5px 1.5px 1.5px #cdcdcd,
+ inset -1.5px -1.5px 1.5px #fafafa;
+          box-shadow: inset 1.5px 1.5px 1.5px #cdcdcd,
+ inset -1.5px -1.5px 1.5px #fafafa;
+}
+
+.dashboard-wrapper .btn-manage .pre {
+  top: 0;
+  left: 0;
+}
+
+.dashboard-wrapper .btn-manage .now {
+  top: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+
+.dashboard-wrapper .btn-manage .next {
+  top: 0;
+  right: 0;
+}
+
+.dashboard-wrapper table {
+  display: table;
+}
+
+.dashboard-wrapper table tbody tr {
+  background-color: rgb(167, 167, 167);
+}
+
+.dashboard-wrapper table tbody tr:nth-child(odd) {
+  background-color: rgb(199, 199, 199);
+}
+
+.dashboard-wrapper table tbody tr th {
+  text-transform: capitalize;
+  text-align: center;
+  padding: 5px 10px;
+  background-color: rgb(116, 116, 116);
+  color: #fff;
+  min-width: 130px;
+  border-right: 1px solid #000;
+  border-top: 1px solid #000;
+  max-width: 130px;
+}
+
+.dashboard-wrapper table tbody tr th:first-child {
+  position: relative;
+  padding: 0;
+}
+
+.dashboard-wrapper table tbody tr th:first-child::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 1px;
+  background-color: #000;
+  left: 0;
+  top: 0;
+}
+
+.dashboard-wrapper table tbody tr td {
+  border: 1px solid #000;
+  min-width: 70px;
+  max-width: 70px;
+  height: 125px;
+  padding: 5px 10px;
+  text-align: center;
+}
+
+.dashboard-wrapper table tbody tr td p {
+  margin: auto;
+  font-size: 18px;
+}
+
+@media (max-width: 600px) {
+  .dashboard-wrapper table tbody tr td p {
+    font-size: 12px;
+  }
+}
+
+.dashboard-wrapper table tbody .week-names p {
+  font-weight: 400;
+  font-size: 15px;
+  color: #fa0;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .dashboard-wrapper table {
+    width: 80%;
+  }
+  .dashboard-wrapper table tbody tr th {
+    display: none;
+  }
+  .dashboard-wrapper table tbody tr td {
+    display: block;
+    width: 100%;
+    min-height: 40px;
+    border-bottom: 1px solid #000;
+  }
+}
