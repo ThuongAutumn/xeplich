@@ -7,11 +7,13 @@ import datetime
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.models import User
+from .forms import RegistrationForm
 
 # region Front handler
 
 def towf(rms, cls):
-    print("14 : 2")
     list_cac_th = []
     list_max = []
     try:
@@ -67,7 +69,6 @@ def threef(rms, cls): # i j k l m
 
     except:
         print("lỗi threef()")
-    # print("list_cac_th, list_max :", list_cac_th, list_max)
     return list_cac_th, list_max
 
 def fourf(rms, cls): # i j k l m
@@ -104,8 +105,6 @@ def fourf(rms, cls): # i j k l m
     return list_cac_th, list_max
 
 def fivef(rms, cls): # i j k l m
-    print("95: 5")
-
     list_cac_th = []
     list_max = []
     try:
@@ -143,7 +142,6 @@ def fivef(rms, cls): # i j k l m
 
 #list_cac_th, list_max
 def sixf(rms, cls): # i j k l m
-    print("129: 6")
     list_cac_th = []
     list_max = []
     try:
@@ -195,7 +193,6 @@ def case(n, rms, cls):
 
 #for5 cũ
 def xuly246357(rms, cls): # i j k l m
-    print("180  ",cls.count())
     result = case(cls.count(),rms,cls)
     list_cac_th = result[0]
     list_max = result[1]
@@ -208,14 +205,11 @@ def xuly246357(rms, cls): # i j k l m
             # tách ds index phòng
             list_index_room = []
             list_index_duration = []
-            # for j in range(len(i[0])):
-            #     list_index_room.append(i[0][j][0])
-            # print("ds room ",list_index_room)
+
 
             for j in range(len(i[0])):
                 rm = rms[i[0][j][0]]
                 cl =  cls[j]
-                # print("index room :",i[0][j][0])
                 today = datetime.date.today() # .day.weekday() # thứ 2 -> cn = 0 -> 6
                 dtt = datetime.timedelta(days= 7 * i[0][j][1] ) # delta time
 
@@ -237,14 +231,11 @@ def xuly246357(rms, cls): # i j k l m
                     for l in range(len(list_index_room)):
                         if list_index_room[l] == i[0][j][0]:
                             dem += list_index_duration[l]
-                    # print("list_index_room ", list_index_room)
-                    # print("list_index_duration",list_index_duration)
-                    # print("dem", dem)
+                  
                     list_index_room.append(i[0][j][0])
                     list_index_duration.append(i[0][j][1])
                     today = datetime.date.today() # .day.weekday() # thứ 2 -> cn = 0 -> 6
                     dtt = datetime.timedelta(days= 7 * dem ) # delta time
-                    print(dtt) # tạo weeeks nếu chưa đủ tuần
                     weeks = Week.objects.filter(Q(start__gt = today + dtt) & Q(start__lt = today + dtt + datetime.timedelta(days= 7 * i[0][j][1] )) ).order_by("-end") # giảm dần
                     for w in weeks:
                         clrm, created = ClassRoom.objects.get_or_create(
@@ -301,19 +292,15 @@ def for6(rms, cls): # i j k l m
     for i in list_cac_th:
         if i[1] == m:
             truong_hop_chon = i[0]
-            # print(i[0])
-            # print(len(i[0]))
+          
             # tách ds index phòng
             list_index_room = []
             list_index_duration = []
-            # for j in range(len(i[0])):
-            #     list_index_room.append(i[0][j][0])
-            # print("ds room ",list_index_room)
+
 
             for j in range(len(i[0])):
                 rm = rms[i[0][j][0]]
                 cl =  cls[j]
-                # print("index room :",i[0][j][0])
                 today = datetime.date.today() # .day.weekday() # thứ 2 -> cn = 0 -> 6
                 dtt = datetime.timedelta(days= 7 * i[0][j][1] ) # delta time
 
@@ -335,14 +322,11 @@ def for6(rms, cls): # i j k l m
                     for l in range(len(list_index_room)):
                         if list_index_room[l] == i[0][j][0]:
                             dem += list_index_duration[l]
-                    # print("list_index_room ", list_index_room)
-                    # print("list_index_duration",list_index_duration)
-                    # print("dem", dem)
+                  
                     list_index_room.append(i[0][j][0])
                     list_index_duration.append(i[0][j][1])
                     today = datetime.date.today() # .day.weekday() # thứ 2 -> cn = 0 -> 6
                     dtt = datetime.timedelta(days= 7 * dem ) # delta time
-                    # print(dtt) # tạo weeeks nếu chưa đủ tuần
                     weeks = Week.objects.filter(Q(start__gt = today + dtt) & Q(start__lt = today + dtt + datetime.timedelta(days= 7 * i[0][j][1] )) ).order_by("-end") # giảm dần
                     for w in weeks:
                         clrm, created = ClassRoom.objects.get_or_create(
@@ -434,28 +418,14 @@ def xulyfullweek():
     
 
 # endregion
-# tạo tuần
-# def taotuan():
-#     dtt = datetime.timedelta(days= 6) # delta time
-#     st = datetime.date(2021,6,7)
-#     ed = st + dtt
-#     for i in range(50):
-#         w, created = Week.objects.get_or_create(start = st, end = ed)
-#         st = ed + datetime.timedelta(days= 1)
-#         ed = ed + datetime.timedelta(days= 7)
+
 
 
 # Create your views here.
-@login_required
+@staff_member_required
 def index(request):
-
-    # clrms = ClassRoom.objects.all().delete()
-    # # dem_so_hoc_sinh()
-    # xulyfullweek()
-
     room = Room.objects.filter(status = 'W' ) # tăng dần
     cls = Class.objects.all().order_by("duration")
-
     course = Course.objects.filter()
     clrms = ClassRoom.objects.all()
     context = {
@@ -472,39 +442,6 @@ def dem_so_hoc_sinh():
        cl.number_student = cl.students.all().count()
        cl.save()
     return 1
-
-
-def xuLyXepLich(cl):
-    # đưa 1 lớp (cl) mới vào xử lý
-
-    today = datetime.date.today() # .day.weekday() # thứ 2 -> cn = 0 -> 6
-    dtt = datetime.timedelta(days=7) # delta time
-    weeks = Week.objects.all().order_by("-end") # giảm dần
-
-
-
-    # last = weeks[0].end # vd 13
-    # s = last + datetime.timedelta(days=1) # 14
-    # e = last + datetime.timedelta(days=7) # 20
-
-    # print("last ", last)
-    # print("cls[0].duration ", cls[0].duration)
-    # # tạo số tuần tương ứng
-    # for i in range(1, cls[0].duration + 1):
-    #     if today + dtt*i > weeks[0].end:
-    #         new_week = Week.objects.create(start = s, end = e)
-    #         s = e + datetime.timedelta(days=1) # 21
-    #         e += datetime.timedelta(days=7) # 27
-    #         print("create week ", new_week , "sucess")
-
-    # lấy những lớp có duration lớn nhất ra, bỏ những lớp ít nhất vào
-
-    # SORT DS LỚP THEO DURATION TĂNG DẦN
-    # cls = Class.objects.all().order_by('-duration') # ??? 7
-    # rms = Room.objects.all().order_by("-capacity") # ???
-
-    # for i in range(0,rms.count()):
-
 
 
 def detail_class(request, pk):
@@ -582,7 +519,6 @@ class Courses(View):
 
 @method_decorator(login_required(), name='dispatch')
 class Rooms(View):
-
 
     def get(self, request):
         rooms = Room.objects.all()
@@ -691,6 +627,34 @@ class Students(View):
 
 
 
+def register(request):
+    form =RegistrationForm()
+    if request.method =='POST':
+        form=RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    return render(request,'core/register.html',{'form':form})
+
+
+@login_required
+def student_view(request):
+    current_user = request.user
+    if current_user.is_staff == True:
+        return redirect('index')
+    student = Student.objects.get(user = current_user)
+    rooms = Room.objects.filter(status = 'W' )
+    clrms = []
+    for cl in student.classes.all():
+        clrm = ClassRoom.objects.filter(classID = cl)
+        for j in clrm:
+            clrms.append(j)
+    context = {
+        'rooms': rooms,
+        'student':student,
+        'clrms': clrms,
+    }
+    return render(request, 'core/student_index.html', context)
 
 
     

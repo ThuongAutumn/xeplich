@@ -1,6 +1,7 @@
 from typing import ClassVar
 from django.db import models
 from django.db.models.deletion import CASCADE
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -49,7 +50,6 @@ class Course(models.Model):
         return self.name
 
 
-
 class Class(models.Model):
     slug = models.SlugField(max_length=30,default='')
     name = models.CharField(default='',max_length=255)
@@ -62,10 +62,10 @@ class Class(models.Model):
 
     def __str__(self):
         return self.name
-
     
 
 class Student(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE, related_name="users",blank=True, null=True )
     name = models.CharField(default='',max_length=255)
     birth = models.DateField(blank=True, null=True)
     phone = models.CharField(default='',null=True,blank=True,max_length=13)
