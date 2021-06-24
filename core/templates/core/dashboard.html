@@ -441,6 +441,7 @@
             }
 
             $(`.week-names > .${i}`).append(`<p>${date}/${month}/${year}<p/>`);
+            $(`.week-names > th > p:nth-child(2)`).remove();
         }
     }
 
@@ -456,12 +457,14 @@
                         $(`.day_1.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
                         $(`.day_3.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
                         $(`.day_5.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
+                        $(`.abc > a > p:nth-child(2)`).remove();
                         break;
 
                     case "TTS":
                         $(`.day_2.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
                         $(`.day_4.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
                         $(`.day_6.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
+                        $(`.abc > a > p:nth-child(2)`).remove();
                         break;
                 }
             }
@@ -471,7 +474,11 @@
 
 </script>
 
-
+{% comment %}
+<script src="{% static 'js/js/dashboard.js' %}"></script> {% endcomment %}
+<script>
+    $('.now').click()
+</script>
 {% comment %}
 <script src="{% static 'js/js/dashboard.js' %}"></script> {% endcomment %}
 

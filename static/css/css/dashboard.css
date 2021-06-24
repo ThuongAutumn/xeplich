@@ -7,14 +7,6 @@ body {
   color: #fa0;
 }
 
-.abc a p {
-  color: #fa0;
-}
-
-.abc a p:hover {
-  color: #fa0;
-}
-
 .dashboard-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -123,15 +115,29 @@ body {
   height: 125px;
   padding: 5px 10px;
   text-align: center;
+  font-weight: 500;
 }
 
-.dashboard-wrapper table tbody tr td p {
+.dashboard-wrapper table tbody tr td:nth-child(1) {
+  font-weight: 600;
+}
+
+.dashboard-wrapper table tbody tr td a {
+  color: #fa0;
+}
+
+.dashboard-wrapper table tbody tr td a:hover {
+  -webkit-text-decoration-color: black;
+  text-decoration-color: black;
+}
+
+.dashboard-wrapper table tbody tr td a p {
   margin: auto;
   font-size: 18px;
 }
 
 @media (max-width: 600px) {
-  .dashboard-wrapper table tbody tr td p {
+  .dashboard-wrapper table tbody tr td a p {
     font-size: 12px;
   }
 }
@@ -156,5 +162,31 @@ body {
     min-height: 40px;
     border-bottom: 1px solid #000;
   }
+}
+
+.dashboard_light_theme .timetable tbody tr {
+  background-color: #e5ebf2;
+}
+
+.dashboard_light_theme .timetable tbody tr th {
+  background-color: #5b9bd5;
+  color: #f9fbfd;
+}
+
+.dashboard_light_theme .timetable tbody tr td {
+  color: #000000;
+}
+
+.dashboard_light_theme .timetable tbody tr td a {
+  color: #000000;
+}
+
+.dashboard_light_theme .timetable tbody tr td a:hover {
+  -webkit-text-decoration-color: #0088ff;
+  text-decoration-color: #0088ff;
+}
+
+.dashboard_light_theme .timetable tbody tr:nth-child(odd) {
+  background-color: #d2deef;
 }
 /*# sourceMappingURL=dashboard.css.map */
