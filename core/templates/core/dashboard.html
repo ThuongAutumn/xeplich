@@ -32,11 +32,7 @@
         </tbody>
     </table>
 </div>
-<<<<<<< HEAD
 {% comment %} tạo bảng {% endcomment %}
-=======
-
->>>>>>> 686d795d97d5216ceb41015206c161a42e492da8
 <script>
     var text = "";
     let i = 1
@@ -52,20 +48,11 @@
             <td class="weekend"></td>
         </tr>`;
         i ++
-<<<<<<< HEAD
     {% endfor %}
     var ct = document.querySelector(".timetable");
     ct.insertAdjacentHTML("beforeend", text);
 </script>
 
-=======
-
-    {% endfor %}
-
-var ct = document.querySelector(".timetable");
-ct.insertAdjacentHTML("beforeend", text);
-</script>
->>>>>>> 686d795d97d5216ceb41015206c161a42e492da8
 <script>
     const present = new Date();
     let weekDay = present.getDay();
@@ -86,10 +73,6 @@ ct.insertAdjacentHTML("beforeend", text);
         console.log(text)
     }
 
-<<<<<<< HEAD
-=======
-   
->>>>>>> 686d795d97d5216ceb41015206c161a42e492da8
 
     $(".pre").click(function () {
     for (let i = 0; i < 7; i++) {
@@ -127,11 +110,7 @@ ct.insertAdjacentHTML("beforeend", text);
     });
 
 
-<<<<<<< HEAD
 function dateSubtraction() {
-=======
-        function dateSubtraction() {
->>>>>>> 686d795d97d5216ceb41015206c161a42e492da8
     if (date <= 14) {
         if (month >= 2 && month <= 12) {
         month -= 1;
@@ -169,11 +148,7 @@ function dateSubtraction() {
     dateAddition();
     }
 
-<<<<<<< HEAD
 function getNow() {
-=======
-    function getNow() {
->>>>>>> 686d795d97d5216ceb41015206c161a42e492da8
     weekDay = present.getDay();
     date = present.getDate();
     month = present.getMonth() + 1;
@@ -431,15 +406,9 @@ function getNow() {
     }
 
     dateAddition();
-<<<<<<< HEAD
 }
 
 function dateAddition() {
-=======
-    }
-
-    function dateAddition() {
->>>>>>> 686d795d97d5216ceb41015206c161a42e492da8
     for (let i = 0; i < 7; i++) {
         date += 1;
         if (
@@ -473,11 +442,7 @@ function dateAddition() {
     }
     }
 
-<<<<<<< HEAD
 function checkSameWeek() {
-=======
-    function checkSameWeek() {
->>>>>>> 686d795d97d5216ceb41015206c161a42e492da8
     let currentSunday = new Date(`${month}/${date}/${year}`);
     for (let i = 0; i < standard.length; i++) {
         let sD = new Date(standard[i][2]);
@@ -509,9 +474,5 @@ function checkSameWeek() {
 <script>
     $('.now').click()
 </script>
-<<<<<<< HEAD
-=======
-{% comment %} <script src="{% static 'js/js/dashboard.js' %}"></script> {% endcomment %}
->>>>>>> 686d795d97d5216ceb41015206c161a42e492da8
 
 {% endblock contain %}
