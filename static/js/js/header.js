@@ -17,9 +17,8 @@ $(document).ready(function () {
     $(".light-theme").click(function () {
         localStorage.setItem('theme', "light");
         lightTheme()
-        $(".dashboard-wrapper").removeClass("dashboard_light_theme");
+        $(".dashboard-wrapper").addClass("dashboard_light_theme");
     });
-
 
     if (localStorage.getItem('theme') === 'dark') {
         darkTheme()
