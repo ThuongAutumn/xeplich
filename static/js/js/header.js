@@ -10,21 +10,23 @@ $(document).ready(function () {
 
     $(".dark-theme").click(function () {
         localStorage.setItem('theme', "dark");
-
         darkTheme()
+        $(".dashboard-wrapper").removeClass("dashboard_light_theme");
     });
 
     $(".light-theme").click(function () {
         localStorage.setItem('theme', "light");
-
         lightTheme()
+        $(".dashboard-wrapper").removeClass("dashboard_light_theme");
     });
 
 
     if (localStorage.getItem('theme') === 'dark') {
         darkTheme()
+        $(".dashboard-wrapper").removeClass("dashboard_light_theme");
     } else {
         lightTheme()
+        $(".dashboard-wrapper").addClass("dashboard_light_theme");
     }
 
 });
@@ -50,7 +52,7 @@ function lightTheme() {
     $(".header-dark").css("background-color", "#d9d9d9");
     $(".header-dark .navbar.navbar-dark .navbar-nav .nav-link").css("color", "#282d32");
     $(".header-dark .navbar .form-inline label i").css("color", "#282d32");
-    $(".navbar-brand img").attr("src", "{% static 'img/logo_light.jpg' %}");
+    $(".navbar-brand img").attr("src", "base/css/logo_light.jpg");
     $(".footer-dark").css("background-color", "#f0f9ff");
     $(".footer-dark").css("color", "#282d32");
     $("body").css("background-color", "#ffffff");
