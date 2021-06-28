@@ -10,7 +10,7 @@ Dashboard scheduling
 {% endblock script %}
 
 {% block contain %}
-{% comment %} <form name="formclass" action="" method="post">
+<form name="formclass" action="" method="post">
     {% csrf_token %}
     <label for="">Mã:</label>
     <input type="text" name="slug" required><br>
@@ -47,88 +47,10 @@ Dashboard scheduling
             <th>Trạng thái</th>
             <th></th>
         </tr>
-
+    
     </table>
-</div> {% endcomment %}
-  <form name="formclass" method="post" style="max-width: 1300px;">
-      {% csrf_token %}
-
-    <label for="" style="color: #65b5c7; display: flex; align-items: center;">Mã:</label>
-    <input type="text" name="slug" required="" placeholder="Nhập mã lớp" style="
-          border-radius: 10px;
-          padding: 7px 0;
-          padding-left: 10px;
-          text-transform: uppercase;
-        " /><br />
-    <label for="" style="color: #65b5c7; display: flex; align-items: center;">Tên lớp:</label>
-    <input type="text" name="name" required="" placeholder="Nhập tên lớp" style="
-          border-radius: 10px;
-          padding: 7px 0;
-          padding-left: 10px;
-          text-transform: uppercase;
-        " /><br />
-    <label for="" style="color: #65b5c7; display: flex; align-items: center;">Số lượng:</label>
-    <input type="number" name="number" min="0" max="40" required="" placeholder="Số học sinh" style="
-          border-radius: 10px;
-          padding: 7px 0;
-          padding-left: 10px;
-          text-transform: uppercase;
-        " /><br />
-    <label for="" style="color: #65b5c7; display: flex; align-items: center;">Lịch học:</label>
-    <select name="schedule" id="schedule" placeholder="Nhập mã lớp" style="
-          border-radius: 10px;
-          padding: 7px 0;
-          padding-left: 10px;
-          text-transform: uppercase;
-        ">
-      <option value="MWF">Shift Mon Wed Fri</option>
-      <option value="TTS">Shift Tue Thu Sat</option>
-      <option value="F">Shift All Week</option>
-    </select><br />
-    <label for="" style="color: #65b5c7; display: flex; align-items: center;">Khoá học:</label>
-    <select name="courses" id="courses" placeholder="" style="
-          border-radius: 10px;
-          padding: 7px 0;
-          padding-left: 10px;
-          text-transform: uppercase;
-        ">
-        {% for course in courses %}
-            <option value="{{course.id}}">{{course.name}}</option>
-        {% endfor %}
-    </select>
-    <input type="hidden" id="iId" name="iId" />
-    <br />
-    <input type="submit" name="add_class" value="Thêm" style="
-          border-radius: 10px;
-          padding: 7px 5px;
-         
-        " />
-    <input type="submit" name="update_class" value="Sửa" style="
-          border-radius: 10px;
-          padding: 7px 5px;
-          
-        " />
-    <input type="submit" name="delete_class" value="Xoá" style="
-          border-radius: 10px;
-          padding: 7px 5px;
-        " />
-  </form>
-
-  <div class="view">
-    <table class="custom-table">
-        <tr>
-            <th>Mã Lớp</th>
-            <th>Tên Lớp</th>
-            <th>Khoá học</th>
-            <th>Sĩ số</th>
-            <th>Lịch học</th>
-            <th>Thời gian học còn lại</th>
-            <th>Trạng thái</th>
-            <th></th>
-        </tr>
-      
-    </table>
-  </div>
+</div> 
+  
 <script>
     var table_view = document.querySelector('.view>table')
     var list_class = []

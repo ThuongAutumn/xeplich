@@ -422,8 +422,23 @@ def xulyfullweek():
 
 
 # Create your views here.
-@staff_member_required
+@login_required
 def index(request):
+    current_user = request.user
+    if current_user.is_staff != True:
+        student = Student.objects.get(user = current_user)
+        rooms = Room.objects.filter(status = 'W' )
+        clrms = []
+        for cl in student.classes.all():
+            clrm = ClassRoom.objects.filter(classID = cl)
+            for j in clrm:
+                clrms.append(j)
+        context = {
+            'rooms': rooms,
+            'student':student,
+            'clrms': clrms,
+        }
+        return render(request, 'core/student_index.html', context)
     room = Room.objects.filter(status = 'W' ) # tăng dần
     cls = Class.objects.all().order_by("duration")
     course = Course.objects.filter()
@@ -637,24 +652,22 @@ def register(request):
     return render(request,'core/register.html',{'form':form})
 
 
-@login_required
-def student_view(request):
-    current_user = request.user
-    if current_user.is_staff == True:
-        return redirect('index')
-    student = Student.objects.get(user = current_user)
-    rooms = Room.objects.filter(status = 'W' )
-    clrms = []
-    for cl in student.classes.all():
-        clrm = ClassRoom.objects.filter(classID = cl)
-        for j in clrm:
-            clrms.append(j)
-    context = {
-        'rooms': rooms,
-        'student':student,
-        'clrms': clrms,
-    }
-    return render(request, 'core/student_index.html', context)
+# @login_required
+# def student_view(request):
+    
+#     student = Student.objects.get(user = current_user)
+#     rooms = Room.objects.filter(status = 'W' )
+#     clrms = []
+#     for cl in student.classes.all():
+#         clrm = ClassRoom.objects.filter(classID = cl)
+#         for j in clrm:
+#             clrms.append(j)
+#     context = {
+#         'rooms': rooms,
+#         'student':student,
+#         'clrms': clrms,
+#     }
+#     return render(request, 'core/student_index.html', context)
 
 
     
