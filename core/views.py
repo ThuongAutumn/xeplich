@@ -422,19 +422,45 @@ def xulyfullweek():
 
 
 # Create your views here.
-@staff_member_required
+@login_required
 def index(request):
-    room = Room.objects.filter(status = 'W' ) # tăng dần
-    cls = Class.objects.all().order_by("duration")
-    course = Course.objects.filter()
-    clrms = ClassRoom.objects.all()
+    current_user = request.user
+    if current_user.is_staff:
+        room = Room.objects.filter(status = 'W' ) # tăng dần
+        cls = Class.objects.all().order_by("duration")
+        course = Course.objects.filter()
+        clrms = ClassRoom.objects.all()
+        context = {
+            'classes': cls,
+            'rooms': room,
+            'courses': course,
+            'clrms': clrms,
+        }
+        return render(request, 'core/dashboard.html', context)
+    else:
+        return student_view(request)
+
+
+@login_required
+def student_view(request):
+    current_user = request.user
+    if current_user.is_staff == True:
+        return redirect('index')
+    student = Student.objects.get(user = current_user)
+    rooms = Room.objects.filter(status = 'W' )
+    clrms = []
+    for cl in student.classes.all():
+        clrm = ClassRoom.objects.filter(classID = cl)
+        for j in clrm:
+            clrms.append(j)
     context = {
-        'classes': cls,
-        'rooms': room,
-        'courses': course,
+        'rooms': rooms,
+        'student':student,
         'clrms': clrms,
     }
-    return render(request, 'core/dashboard.html', context)
+    return render(request, 'core/student_index.html', context)
+
+
 
 def dem_so_hoc_sinh():
     cls = Class.objects.filter(Q(status="LOCKED") | Q(status = "WAITING"))
@@ -517,6 +543,10 @@ class Courses(View):
             return HttpResponse("lỗi thêm khoá học")
         return redirect("courses")
 
+def DeleteCourse(request,pk):
+    Course.objects.get(pk = pk).delete()
+    return redirect("courses")
+
 @method_decorator(login_required(), name='dispatch')
 class Rooms(View):
 
@@ -532,8 +562,14 @@ class Rooms(View):
         try:
             Room.objects.create(name = form['name'], capacity = form['capacity'],status=form['status'] )
         except:
-            return HttpResponse("lỗi thêm khoá học")
+            return HttpResponse("lỗi thêm phòng học")
         return redirect("rooms")
+
+
+def DeleteRoom(request,pk):
+    Room.objects.get(pk = pk).delete()
+    return redirect("rooms")
+
 
 @method_decorator(login_required(), name='dispatch')
 class Students(View):
@@ -541,7 +577,6 @@ class Students(View):
     def get(self, request):
         students = Student.objects.all()
         classes = Class.objects.filter(Q(status="LOCKED") | Q(status = "WAITING"))
-
         context = {
             'students':students,
             'classes':classes,
@@ -554,8 +589,9 @@ class Students(View):
 
         list_lop_day = []
         flag_phong_day = False
-
+        # print(it)
         if 'add_student' in form:
+            return HttpResponse("Bạn không thể thêm!")
             try:
                 st = Student.objects.create(name = form['name'], birth = form['birth'])
                 for cl in classes:
@@ -576,7 +612,6 @@ class Students(View):
                         list_lop_day.append(cl.slug)
                 st.save()
             except:
-
                 return HttpResponse("lỗi thêm học sinh")
             if flag_phong_day == True:
                 text = ''
@@ -596,17 +631,22 @@ class Students(View):
                 # add new classes in student
                 std.classes.clear()
                 for cl in classes:
-                    if cl.students.all().count() < cl.room.capacity:
+                    clrm = ClassRoom.objects.filter(classID = cl.id)
+                    if cl.students.all().count() < clrm[0].roomID.capacity:
+                        print("Phòng còn chỗ")
                         try:
                             s = str(cl.id)
-                            value = form[s]
+                            value = form.get(s,None)
                             if(value != None):
                                 std.classes.add(cl)
+                                std.save()
                                 if cl.students.all().count() > cl.number:
                                     cl.number = cl.students.all().count()
                                     cl.save()
+                            else:
+                                print("ID lớp None")
                         except:
-                            continue
+                            print("không get được id")
                     else:
                         flag_phong_day = True
                         list_lop_day.append(cl.slug)
@@ -617,8 +657,10 @@ class Students(View):
                 for i in list_lop_day:
                     text += ', '+i
                 return HttpResponse("phòng của lớp ", text , ' đã đầy')
+        # xoá học sinh
         else:
             try:
+                return HttpResponse("Không thể xoá!")
                 Student.objects.get(id = form['sId']).delete()
             except:
                 return HttpResponse("lỗi xoá học sinh")
@@ -637,24 +679,6 @@ def register(request):
     return render(request,'core/register.html',{'form':form})
 
 
-@login_required
-def student_view(request):
-    current_user = request.user
-    if current_user.is_staff == True:
-        return redirect('index')
-    student = Student.objects.get(user = current_user)
-    rooms = Room.objects.filter(status = 'W' )
-    clrms = []
-    for cl in student.classes.all():
-        clrm = ClassRoom.objects.filter(classID = cl)
-        for j in clrm:
-            clrms.append(j)
-    context = {
-        'rooms': rooms,
-        'student':student,
-        'clrms': clrms,
-    }
-    return render(request, 'core/student_index.html', context)
 
 
     

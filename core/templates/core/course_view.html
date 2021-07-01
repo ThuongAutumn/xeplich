@@ -66,7 +66,7 @@ Dashboard scheduling
         text += `<td><a href="#">{{course.id}}</a></td>
             <td>{{course.name}}</td>
             <td>{{course.get_duration_display}}</td>
-            <td><a href="#">Xoá</a></td>`
+            <td><a href="{% url 'deletecourses' course.id %}">Xoá</a></td>`
         text += "</tr>"
         {% endfor %}
 

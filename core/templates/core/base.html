@@ -68,8 +68,7 @@
                     <form class="form-inline mr-auto">
                         <div class="form-group">
                             <label for="search-field"><i class="fa fa-search"></i></label>
-                            <input class="form-control search-field" type="search" autocomplete="off" name="search"
-                                id="search-field" />
+                            <input class="" type="search" id="search-field" autocomplete="off" name="search"
                         </div>
                     </form>
 
@@ -157,13 +156,13 @@
                 </div>
             {% else %}
                 <div class="logo">
-                    <a href="{% url 'student_view' %}" class="gt mini"> GT </a>
-                    <a href="{% url 'student_view' %}" class="gt normal out"> GENNY TEAM</a>
+                    <a href="{% url 'index' %}" class="gt mini"> GT </a>
+                    <a href="{% url 'index' %}" class="gt normal out"> GENNY TEAM</a>
                 </div>
 
                 <ul class="nav">
                     <li class="nav-item">
-                        <a href="{% url 'student_view' %}" class="nav-link">
+                        <a href="{% url 'index' %}" class="nav-link">
                             <i class="flaticon flaticon-dashboard"></i>
                             <p class="out">Dashboard</p>
                         </a>
@@ -276,14 +275,7 @@
     
     <script>
         $(document).ready(function () {
-        $('#search-field').keypress(function (event) {
-            let keycode = (event.keyCode ? event.keyCode : event.which);
-            if (keycode == '32') {
-                str = document.getElementById('search-field').value;
-                window.find(str, false)
-            }
 
-        });
 
         $(".dark-theme").click(function () {
             localStorage.setItem('theme', "dark");

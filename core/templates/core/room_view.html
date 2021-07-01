@@ -31,7 +31,6 @@ Dashboard scheduling
         <div class="form-group">
             <label for="">Trạng thái:</label>
             <select name="status" id="status">
-                <option disabled selected value>Trạng thái</option>
                 <option value="W">Working</option>
                 <option value="U">Upgrading</option>
                 <option value="B">Broken</option>
@@ -52,7 +51,6 @@ Dashboard scheduling
                 <th>Trạng thái</th>
                 <th></th>
             </tr>
-
         </table>
     </div>
 </div>
@@ -70,7 +68,7 @@ Dashboard scheduling
             <td>{{room.name}}</td>
             <td>{{room.capacity}}</td>
             <td>{{room.get_status_display}}</td>
-            <td><a href="#">Xoá</a></td>`
+            <td><a href="{% url 'deleterooms' room.id %}">Xoá</a></td>`
         text += "</tr>"
         {% endfor %}
 
