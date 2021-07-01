@@ -5,52 +5,72 @@
 Dashboard scheduling
 {% endblock title %}
 
-{% block script %}
-
-{% endblock script %}
+{% block head %}
+<title>Course</title>
+<link rel="stylesheet" href="{% static 'css/css/classes.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+{% endblock head %}
 
 {% block contain %}
-<form name="formcourse" action="" method="post">
-    {% csrf_token %}
-    <label for="">Tên Khoá học:</label>
-    <input type="text" name="name" required><br>
-    <label for="">Thời lượng:</label>
-    <select name="duration" id="duration" required>  
-        <option value="3">3 Week</option>
-        <option value="4">4 Week</option>
-        <option value="5">5 Week</option>
-        <option value="6">6 Week</option>
-    </select> <br>
-    <input type="submit" value="Thêm">
-</form>
-<div class="view">
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Tên Khoá học</th>
-            <th>Thời lượng</th>
-            <th></th>
-        </tr>
+<div class="class-wrapper">
+    <form name="formcourse" action="" method="post">
+        {% csrf_token %}
+        <h2 class="qllh">courses management</h2>
 
-    </table>
+        <div class="form-group">
+            <label for="">Tên khoá học:</label>
+            <input type="text" name="name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="">Thời lượng:</label>
+            <select name="duration" id="duration" required>
+                <option disabled selected value>Thời lượng</option>
+                <option value="3">3 Week</option>
+                <option value="4">4 Week</option>
+                <option value="5">5 Week</option>
+                <option value="6">6 Week</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Thêm">
+        </div>
+    </form>
+
+    <div class="view">
+        <table class="custom-table">
+            <tr class="tr-title">
+                <th>ID</th>
+                <th>Tên Khoá học</th>
+                <th>Thời lượng</th>
+                <th></th>
+            </tr>
+
+        </table>
+    </div>
+
+
 </div>
+
 <script>
     var table_view = document.querySelector('.view>table')
 
     loadTable()
 
-    function loadTable(){
+    function loadTable() {
         let text = ''
         {% for course in courses %}
-            text += "<tr>"
-            text += `<td><a href="#">{{course.id}}</a></td>
+        text += "<tr>"
+        text += `<td><a href="#">{{course.id}}</a></td>
             <td>{{course.name}}</td>
             <td>{{course.get_duration_display}}</td>
             <td><a href="#">Xoá</a></td>`
-            text += "</tr>"
+        text += "</tr>"
         {% endfor %}
 
-        table_view.insertAdjacentHTML('beforeend',text)
+        table_view.insertAdjacentHTML('beforeend', text)
     }
 </script>
 {% endblock contain %}
