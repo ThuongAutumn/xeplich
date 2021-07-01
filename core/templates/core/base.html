@@ -74,6 +74,7 @@
                     </form>
 
                     <span class="navbar-text">
+                        <span style="color:red;">{{user.username}}</span>
                         <a href="#" class="userName">
                             <img src="{% static 'img/user.png' %}">
                         </a>
@@ -84,76 +85,145 @@
             </div>
         </nav>
     </div>
-
     <div class="menu-dark">
         <div class="menu-wrapper">
-            <div class="logo">
-                <a href="{% url 'index' %}" class="gt mini"> GT </a>
-                <a href="{% url 'index' %}" class="gt normal out"> GENNY TEAM</a>
-            </div>
+            {% if user.is_staff %}
+                <div class="logo">
+                    <a href="{% url 'index' %}" class="gt mini"> GT </a>
+                    <a href="{% url 'index' %}" class="gt normal out"> GENNY TEAM</a>
+                </div>
 
-            <ul class="nav">
-                <li class="nav-item">
-                    <a href="{% url 'index' %}" class="nav-link">
-                        <i class="flaticon flaticon-dashboard"></i>
-                        <p class="out">Dashboard</p>
-                    </a>
-                </li>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a href="{% url 'index' %}" class="nav-link">
+                            <i class="flaticon flaticon-dashboard"></i>
+                            <p class="out">Dashboard</p>
+                        </a>
+                    </li>
 
-                <li class="nav-item">
-                    <a href="{% url 'classes' %}" class="nav-link">
-                        <i class="flaticon flaticon-class"></i>
-                        <p class="out">Classes</p>
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a href="{% url 'classes' %}" class="nav-link">
+                            <i class="flaticon flaticon-class"></i>
+                            <p class="out">Classes</p>
+                        </a>
+                    </li>
 
-                <li class="nav-item">
-                    <a href="{% url 'rooms' %}" class="nav-link">
-                        <i class="flaticon flaticon-blueprint"></i>
-                        <p class="out">Rooms</p>
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a href="{% url 'rooms' %}" class="nav-link">
+                            <i class="flaticon flaticon-blueprint"></i>
+                            <p class="out">Rooms</p>
+                        </a>
+                    </li>
 
-                <li class="nav-item">
-                    <a href="{% url 'courses' %}" class="nav-link">
-                        <i class="flaticon flaticon-online-course"></i>
-                        <p class="out">Courses</p>
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a href="{% url 'courses' %}" class="nav-link">
+                            <i class="flaticon flaticon-online-course"></i>
+                            <p class="out">Courses</p>
+                        </a>
+                    </li>
 
-                <li class="nav-item">
-                    <a href="{% url 'students' %}" class="nav-link">
-                        <i class="flaticon flaticon-graduation"></i>
-                        <p class="out">Students</p>
-                    </a>
-                </li>
-            </ul>
+                    <li class="nav-item">
+                        <a href="{% url 'students' %}" class="nav-link">
+                            <i class="flaticon flaticon-graduation"></i>
+                            <p class="out">Students</p>
+                        </a>
+                    </li>
+                </ul>
 
-            <div class="oc-btn">
-                <svg class="svg-oc-btn" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                    version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 490.667 490.667"
-                    style="enable-background: new 0 0 490.667 490.667" xml:space="preserve">
-                    <path style="fill: #009688"
-                        d="M245.333,0C109.839,0,0,109.839,0,245.333s109.839,245.333,245.333,245.333  s245.333-109.839,245.333-245.333C490.514,109.903,380.764,0.153,245.333,0z" />
-                    <path style="fill: #fafafa"
-                        d="M290.133,104.533c-19.139-18.289-49.277-18.289-68.416,0c-18.893,18.881-18.902,49.503-0.021,68.395  c0.007,0.007,0.014,0.014,0.021,0.021l19.2,19.2H117.333C87.878,192.149,64,216.027,64,245.483  c0,29.455,23.878,53.333,53.333,53.333h123.584l-19.2,19.2c-17.522,20.175-15.371,50.734,4.804,68.257  c18.259,15.858,45.423,15.799,63.612-0.139l118.251-118.251c12.492-12.496,12.492-32.752,0-45.248L290.133,104.533z" />
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                </svg>
-            </div>
+                <div class="oc-btn">
+                    <svg class="svg-oc-btn" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 490.667 490.667"
+                        style="enable-background: new 0 0 490.667 490.667" xml:space="preserve">
+                        <path style="fill: #009688"
+                            d="M245.333,0C109.839,0,0,109.839,0,245.333s109.839,245.333,245.333,245.333  s245.333-109.839,245.333-245.333C490.514,109.903,380.764,0.153,245.333,0z" />
+                        <path style="fill: #fafafa"
+                            d="M290.133,104.533c-19.139-18.289-49.277-18.289-68.416,0c-18.893,18.881-18.902,49.503-0.021,68.395  c0.007,0.007,0.014,0.014,0.021,0.021l19.2,19.2H117.333C87.878,192.149,64,216.027,64,245.483  c0,29.455,23.878,53.333,53.333,53.333h123.584l-19.2,19.2c-17.522,20.175-15.371,50.734,4.804,68.257  c18.259,15.858,45.423,15.799,63.612-0.139l118.251-118.251c12.492-12.496,12.492-32.752,0-45.248L290.133,104.533z" />
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                    </svg>
+                </div>
+            {% else %}
+                <div class="logo">
+                    <a href="{% url 'student_view' %}" class="gt mini"> GT </a>
+                    <a href="{% url 'student_view' %}" class="gt normal out"> GENNY TEAM</a>
+                </div>
+
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a href="{% url 'student_view' %}" class="nav-link">
+                            <i class="flaticon flaticon-dashboard"></i>
+                            <p class="out">Dashboard</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="flaticon flaticon-class"></i>
+                            <p class="out">Hồ sơ</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="flaticon flaticon-blueprint"></i>
+                            <p class="out">Công cụ</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="flaticon flaticon-online-course"></i>
+                            <p class="out">Học Tập</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="flaticon flaticon-graduation"></i>
+                            <p class="out">Thông báo</p>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="oc-btn">
+                    <svg class="svg-oc-btn" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 490.667 490.667"
+                        style="enable-background: new 0 0 490.667 490.667" xml:space="preserve">
+                        <path style="fill: #009688"
+                            d="M245.333,0C109.839,0,0,109.839,0,245.333s109.839,245.333,245.333,245.333  s245.333-109.839,245.333-245.333C490.514,109.903,380.764,0.153,245.333,0z" />
+                        <path style="fill: #fafafa"
+                            d="M290.133,104.533c-19.139-18.289-49.277-18.289-68.416,0c-18.893,18.881-18.902,49.503-0.021,68.395  c0.007,0.007,0.014,0.014,0.021,0.021l19.2,19.2H117.333C87.878,192.149,64,216.027,64,245.483  c0,29.455,23.878,53.333,53.333,53.333h123.584l-19.2,19.2c-17.522,20.175-15.371,50.734,4.804,68.257  c18.259,15.858,45.423,15.799,63.612-0.139l118.251-118.251c12.492-12.496,12.492-32.752,0-45.248L290.133,104.533z" />
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                        <g></g>
+                    </svg>
+                </div>
+            {% endif %}
         </div>
     </div>
 

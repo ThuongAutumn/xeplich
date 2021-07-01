@@ -5,56 +5,76 @@
 Dashboard scheduling
 {% endblock title %}
 
-{% block script %}
-   {% comment %} <link rel="stylesheet" href="{% static 'css/rooms.css'%}"> {% endcomment %}
-
-{% endblock script %}
+{% block head %}
+<title>Room</title>
+<link rel="stylesheet" href="{% static 'css/css/classes.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+{% endblock head %}
 
 {% block contain %}
-<form name="formcourse" action="" method="post">
-    {% csrf_token %}
-    <label for="">Tên phòng:</label>
-    <input type="text" name="name" required><br>
-    <label for="">Sức chứa:</label>
-    <input type="number" name="capacity" required><br>
-    <label for="">Trạng thái:</label>
-    <select name="status" id="status">  
-        <option value="W">Working</option>
-        <option value="U">Upgrading</option>
-        <option value="B">Broken</option>
-    </select> <br>
-    <input type="submit" value="Thêm">
-</form>
-<div class="view">
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Tên Phong</th>
-            <th>Sức chứa</th>
-            <th>Trạng thái</th>
-            <th></th>
-        </tr>
+<div class="class-wrapper">
+    <form name="formcourse" action="" method="post">
+        {% csrf_token %}
+        <h2 class="qllh">rooms management</h2>
 
-    </table>
+        <div class="form-group">
+            <label for="">Tên phòng:</label>
+            <input type="text" name="name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="">Sức chứa:</label>
+            <input type="number" name="capacity" required>
+        </div>
+
+        <div class="form-group">
+            <label for="">Trạng thái:</label>
+            <select name="status" id="status">
+                <option disabled selected value>Trạng thái</option>
+                <option value="W">Working</option>
+                <option value="U">Upgrading</option>
+                <option value="B">Broken</option>
+            </select>
+        </div>
+
+        <div class="form-submit" style="justify-content: center;">
+            <input type="submit" value="Thêm">
+        </div>
+    </form>
+
+    <div class="view">
+        <table class="custom-table">
+            <tr class="tr-title">
+                <th>ID</th>
+                <th>Tên Phong</th>
+                <th>Sức chứa</th>
+                <th>Trạng thái</th>
+                <th></th>
+            </tr>
+
+        </table>
+    </div>
 </div>
+
 <script>
     var table_view = document.querySelector('.view>table')
 
     loadTable()
 
-    function loadTable(){
+    function loadTable() {
         let text = ''
         {% for room in rooms %}
-            text += "<tr>"
-            text += `<td><a href="#">{{room.id}}</a></td>
+        text += "<tr>"
+        text += `<td><a href="#">{{room.id}}</a></td>
             <td>{{room.name}}</td>
             <td>{{room.capacity}}</td>
             <td>{{room.get_status_display}}</td>
             <td><a href="#">Xoá</a></td>`
-            text += "</tr>"
+        text += "</tr>"
         {% endfor %}
 
-        table_view.insertAdjacentHTML('beforeend',text)
+        table_view.insertAdjacentHTML('beforeend', text)
     }
 </script>
 {% endblock contain %}

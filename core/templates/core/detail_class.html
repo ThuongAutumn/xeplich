@@ -5,35 +5,56 @@
 Dashboard scheduling
 {% endblock title %}
 
-{% block script %}
-{% endblock script %}
+{% block head %}
+<title>Room</title>
+<link rel="stylesheet" href="{% static 'css/css/classes.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+{% endblock head %}
 
 {% block contain %}
-<div class="detail-class">
-    <h2>Chi tiết lớp:</h2>
-    <p>Mã : {{class.slug}}</p>
-    <p>Tên : {{class.name}}</p>
-    <p>Khoá học: {{class.course}}</p>
-    <p>Buổi học: {{class.day}}</p>
-    <p>Sĩ số: {{class.number_student}}/{{class.number}}</p>
+<div class="class-wrapper">
+    <h2>Chi tiết lớp</h2>
+    <div class="view">
+        <table class="custom-table">
+            <tr class="tr-title">
+                <th>Mã</th>
+                <th>Tên</th>
+                <th>Khoá học</th>
+                <th>Buổi học</th>
+                <th>Sĩ số</th>
+            </tr>
+            <tr>
+                <td>{{class.slug}}</td>
+                <td>{{class.name}}</td>
+                <td>{{class.course}}</td>
+                <td>{{class.day}}</td>
+                <td>{{class.number_student}}/{{class.number}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>Danh sách học sinh</h2>
+
+    <div class="view">
+        <table class="custom-table">
+            <tr class="tr-title">
+                <th>ID</th>
+                <th>Tên</th>
+                <th>Ngày tháng năm sinh</th>
+            </tr>
+
+            {% for std in students %}
+            <tr>
+                <td>{{std.id}}</td>
+                <td>{{std.name}}</td>
+                <td>{{std.birth}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 </div>
 
-<br>
-<h2>Danh sách học sinh</h2>
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Tên</th>
-        <th>Ngày tháng năm sinh</th>
-    </tr>
-    
-    {% for std in students %}
-        <tr>
-            <td>{{std.id}}</td>
-            <td>{{std.name}}</td>
-            <td>{{std.birth}}</td>
-        </tr>
-    {% endfor %}
-</table>
 
-{% endblock content %}
+
+{% endblock contain %}
