@@ -1,5 +1,5 @@
 from django.core import exceptions
-from django.core.checks import messages
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Class, Course, Room, Student, Week, ClassRoom
@@ -499,8 +499,10 @@ class Classes(View):
         if "add_class" in form:
             try:
                 cl = Class.objects.create(slug = form['slug'],name = form['name'],number = form['number'], course = course, day = form['schedule'], duration = duration)
+                messages.success(request,"Thêm lớp học thành công!")
             except:
-                return HttpResponse("lỗi thêm khoá học")
+                messages.warning(request,"Lỗi thêm lớp học!")
+                return redirect("classes")
         elif "update_class" in form:
             try:
                 cl = Class.objects.get(pk = int(form['iId']))
@@ -510,15 +512,19 @@ class Classes(View):
                 cl.course = course
                 cl.day = form['schedule']
                 cl.save()
+                messages.success(request,"Cập nhật lớp học thành công!")
             except:
-                return HttpResponse("Lỗi cập nhật")
+                messages.warning(request,"Lỗi cập nhật lớp học!")
+                return redirect("classes")
         else:
             try:
                 cl = Class.objects.get(pk = int(form['iId']))
                 cl.delete()
+                messages.success(request,"Xoá lớp học thành công!")
                 # XOÁ XONG THÌ PHẢI UPDATE LẠI PHÒNG HỌC VÀ NGÀY BĐ HỌC CÁC KHOÁ SAU NÓ NẾU CÓ
             except:
-                return HttpResponse("Lỗi xoá")
+                messages.Warning(request,"Lỗi xoá lớp học!")
+                return redirect("classes")
         
         clrms = ClassRoom.objects.all().delete()
         # dem_so_hoc_sinh()
@@ -540,12 +546,14 @@ class Courses(View):
         form = request.POST
         try:
             Course.objects.create(name = form['name'], duration = form['duration'])
+            messages.success(request,"Thêm khoá học thành công!")
         except:
-            return HttpResponse("lỗi thêm khoá học")
+            messages.warning(request,"Lỗi thêm khoá học!")
         return redirect("courses")
 
 def DeleteCourse(request,pk):
     Course.objects.get(pk = pk).delete()
+    messages.success(request,"Xoá khoá học thành công!")
     return redirect("courses")
 
 @method_decorator(login_required(), name='dispatch')
@@ -562,13 +570,15 @@ class Rooms(View):
         form = request.POST
         try:
             Room.objects.create(name = form['name'], capacity = form['capacity'],status=form['status'] )
+            messages.success(request,"Thêm phòng thành công!")
         except:
-            return HttpResponse("lỗi thêm phòng học")
+            messages.warning(request,"lỗi thêm phòng học!")
         return redirect("rooms")
 
 
 def DeleteRoom(request,pk):
     Room.objects.get(pk = pk).delete()
+    messages.success(request,"Xoá phòng thành công!")
     return redirect("rooms")
 
 
@@ -590,9 +600,9 @@ class Students(View):
 
         list_lop_day = []
         flag_phong_day = False
-        # print(it)
         if 'add_student' in form:
-            return HttpResponse("Bạn không thể thêm!")
+            messages.warning(request,"Bạn không thể thêm!")
+            return redirect("students")
             try:
                 st = Student.objects.create(name = form['name'], birth = form['birth'])
                 for cl in classes:
@@ -655,20 +665,23 @@ class Students(View):
                     else:
                         flag_phong_day = True
                         list_lop_day.append(cl.slug)
+                messages.success(request,"Cập nhật học sinh thành công!")
             except:
-                return HttpResponse("lỗi sửa học sinh")
+                messages.warning(request,"Lỗi cập nhật học sinh")
+                return redirect("students")
             if flag_phong_day == True:
                 text = ''
                 for i in list_lop_day:
                     text += ', '+i
-                return HttpResponse("phòng của lớp ", text , ' đã đầy')
+                messages.warning(request,"phòng của lớp ", text , ' đã đầy')
+                return redirect("students")
         # xoá học sinh
         else:
             try:
-                return HttpResponse("Không thể xoá!")
-                Student.objects.get(id = form['sId']).delete()
+                messages.warning(request,"Không thể xoá!")
+                # Student.objects.get(id = form['sId']).delete()
             except:
-                return HttpResponse("lỗi xoá học sinh")
+                messages.warning(request,"Không thể xoá!")
 
         return redirect("students")
 
