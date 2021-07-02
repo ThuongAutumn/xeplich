@@ -68,7 +68,6 @@ Dashboard scheduling
             <tr class="tr-title">
                 <th>Mã Lớp</th>
                 <th>Tên Lớp</th>
-                <th>Phòng</th>
                 <th>Khoá học</th>
                 <th>Sĩ số</th>
                 <th>Lịch học</th>
@@ -96,7 +95,7 @@ Dashboard scheduling
             <td>{{cl.get_day_display}}</td>
             <td>{{cl.duration}} week</td>
             <td>{{cl.get_status_display}}</td>
-            <td><a href="#">Xoá</a></td>`
+            `
         text += "</tr>"
         list_class.push({ "id": `{{cl.id}}`, "name": `{{cl.name}}`, 'slug': `{{cl.slug}}`, 'number': `{{cl.number}}`, 'schedule': `{{cl.day}}`, 'course': `{{cl.course.id}}` })
         {% endfor %}

@@ -1,4 +1,5 @@
 from django.core import exceptions
+from django.core.checks import messages
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Class, Course, Room, Student, Week, ClassRoom
@@ -640,6 +641,10 @@ class Students(View):
                             if(value != None):
                                 std.classes.add(cl)
                                 std.save()
+                                print("thêm lớp thành công", cl.number_student)
+                                cl.number_student += 1
+                                print("số hs :", cl.number_student)
+                                cl.save()
                                 if cl.students.all().count() > cl.number:
                                     cl.number = cl.students.all().count()
                                     cl.save()
@@ -678,9 +683,34 @@ def register(request):
             return redirect('/')
     return render(request,'core/register.html',{'form':form})
 
+@login_required
+def Profiles(request):
+    current_user = request.user
+    if current_user.is_staff:
+        # messages.Info(request,"You are admin!")
+        return redirect('index')
+    student = Student.objects.get(user = current_user)
+    cls = student.classes.all()
+    context = {
+        'student':student,
+        'cls':cls,
+    }
+    return render(request, 'core/profile.html',context)
 
-
-
-    
-
+@login_required    
+def UpdateProfile(request):
+    current_user = request.user
+    form = request.POST
+    name = form.get("name",None)
+    birth = form.get("birth",None)
+    phone = form.get("phone",None)
+    if name != None:
+        std = Student.objects.get(user = current_user)
+        std.name = name
+        std.birth = birth
+        std.phone = phone
+        std.save()
+    else:
+        return HttpResponse("lỗi")
+    return redirect('profile')
 
