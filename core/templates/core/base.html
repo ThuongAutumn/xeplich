@@ -19,15 +19,15 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-    
+
     <link rel="stylesheet" href="{% static 'icon/font/flaticon.css' %}" />
     <link rel="stylesheet" href="{% static 'css/css/header.css' %}" />
     <link rel="stylesheet" href="{% static 'css/css/footer.css' %}" />
     <link rel="stylesheet" href="{% static 'css/css/menu.css' %}" />
-    
+
     {% block head %}
     {% endblock head %}
-    
+
 </head>
 
 <body>
@@ -68,12 +68,12 @@
                     <form class="form-inline mr-auto">
                         <div class="form-group">
                             <label for="search-field"><i class="fa fa-search"></i></label>
-                            <input class="" type="search" id="search-field" autocomplete="off" name="search"
+                            <input class="" type="search" id="search-field" autocomplete="off" name="search" />
                         </div>
                     </form>
 
                     <span class="navbar-text">
-                        <span style="color:red;">{{user.username}}</span>
+                        <span class="span-un" style="color:red;">{{user.username}}</span>
                         <a href="#" class="userName">
                             <img src="{% static 'img/user.png' %}">
                         </a>
@@ -87,141 +87,141 @@
     <div class="menu-dark">
         <div class="menu-wrapper">
             {% if user.is_staff %}
-                <div class="logo">
-                    <a href="{% url 'index' %}" class="gt mini"> GT </a>
-                    <a href="{% url 'index' %}" class="gt normal out"> GENNY TEAM</a>
-                </div>
+            <div class="logo">
+                <a href="{% url 'index' %}" class="gt mini"> GT </a>
+                <a href="{% url 'index' %}" class="gt normal out"> GENNY TEAM</a>
+            </div>
 
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a href="{% url 'index' %}" class="nav-link">
-                            <i class="flaticon flaticon-dashboard"></i>
-                            <p class="out">Dashboard</p>
-                        </a>
-                    </li>
+            <ul class="nav">
+                <li class="nav-item">
+                    <a href="{% url 'index' %}" class="nav-link">
+                        <i class="flaticon flaticon-dashboard"></i>
+                        <p class="out">Dashboard</p>
+                    </a>
+                </li>
 
-                    <li class="nav-item">
-                        <a href="{% url 'classes' %}" class="nav-link">
-                            <i class="flaticon flaticon-class"></i>
-                            <p class="out">Classes</p>
-                        </a>
-                    </li>
+                <li class="nav-item">
+                    <a href="{% url 'classes' %}" class="nav-link">
+                        <i class="flaticon flaticon-class"></i>
+                        <p class="out">Classes</p>
+                    </a>
+                </li>
 
-                    <li class="nav-item">
-                        <a href="{% url 'rooms' %}" class="nav-link">
-                            <i class="flaticon flaticon-blueprint"></i>
-                            <p class="out">Rooms</p>
-                        </a>
-                    </li>
+                <li class="nav-item">
+                    <a href="{% url 'rooms' %}" class="nav-link">
+                        <i class="flaticon flaticon-blueprint"></i>
+                        <p class="out">Rooms</p>
+                    </a>
+                </li>
 
-                    <li class="nav-item">
-                        <a href="{% url 'courses' %}" class="nav-link">
-                            <i class="flaticon flaticon-online-course"></i>
-                            <p class="out">Courses</p>
-                        </a>
-                    </li>
+                <li class="nav-item">
+                    <a href="{% url 'courses' %}" class="nav-link">
+                        <i class="flaticon flaticon-online-course"></i>
+                        <p class="out">Courses</p>
+                    </a>
+                </li>
 
-                    <li class="nav-item">
-                        <a href="{% url 'students' %}" class="nav-link">
-                            <i class="flaticon flaticon-graduation"></i>
-                            <p class="out">Students</p>
-                        </a>
-                    </li>
-                </ul>
+                <li class="nav-item">
+                    <a href="{% url 'students' %}" class="nav-link">
+                        <i class="flaticon flaticon-graduation"></i>
+                        <p class="out">Students</p>
+                    </a>
+                </li>
+            </ul>
 
-                <div class="oc-btn">
-                    <svg class="svg-oc-btn" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                        version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 490.667 490.667"
-                        style="enable-background: new 0 0 490.667 490.667" xml:space="preserve">
-                        <path style="fill: #009688"
-                            d="M245.333,0C109.839,0,0,109.839,0,245.333s109.839,245.333,245.333,245.333  s245.333-109.839,245.333-245.333C490.514,109.903,380.764,0.153,245.333,0z" />
-                        <path style="fill: #fafafa"
-                            d="M290.133,104.533c-19.139-18.289-49.277-18.289-68.416,0c-18.893,18.881-18.902,49.503-0.021,68.395  c0.007,0.007,0.014,0.014,0.021,0.021l19.2,19.2H117.333C87.878,192.149,64,216.027,64,245.483  c0,29.455,23.878,53.333,53.333,53.333h123.584l-19.2,19.2c-17.522,20.175-15.371,50.734,4.804,68.257  c18.259,15.858,45.423,15.799,63.612-0.139l118.251-118.251c12.492-12.496,12.492-32.752,0-45.248L290.133,104.533z" />
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                    </svg>
-                </div>
+            <div class="oc-btn">
+                <svg class="svg-oc-btn" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 490.667 490.667"
+                    style="enable-background: new 0 0 490.667 490.667" xml:space="preserve">
+                    <path style="fill: #009688"
+                        d="M245.333,0C109.839,0,0,109.839,0,245.333s109.839,245.333,245.333,245.333  s245.333-109.839,245.333-245.333C490.514,109.903,380.764,0.153,245.333,0z" />
+                    <path style="fill: #fafafa"
+                        d="M290.133,104.533c-19.139-18.289-49.277-18.289-68.416,0c-18.893,18.881-18.902,49.503-0.021,68.395  c0.007,0.007,0.014,0.014,0.021,0.021l19.2,19.2H117.333C87.878,192.149,64,216.027,64,245.483  c0,29.455,23.878,53.333,53.333,53.333h123.584l-19.2,19.2c-17.522,20.175-15.371,50.734,4.804,68.257  c18.259,15.858,45.423,15.799,63.612-0.139l118.251-118.251c12.492-12.496,12.492-32.752,0-45.248L290.133,104.533z" />
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                </svg>
+            </div>
             {% else %}
-                <div class="logo">
-                    <a href="{% url 'index' %}" class="gt mini"> GT </a>
-                    <a href="{% url 'index' %}" class="gt normal out"> GENNY TEAM</a>
-                </div>
+            <div class="logo">
+                <a href="{% url 'index' %}" class="gt mini"> GT </a>
+                <a href="{% url 'index' %}" class="gt normal out"> GENNY TEAM</a>
+            </div>
 
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a href="{% url 'index' %}" class="nav-link">
-                            <i class="flaticon flaticon-dashboard"></i>
-                            <p class="out">Dashboard</p>
-                        </a>
-                    </li>
+            <ul class="nav">
+                <li class="nav-item">
+                    <a href="{% url 'index' %}" class="nav-link">
+                        <i class="flaticon flaticon-dashboard"></i>
+                        <p class="out">Dashboard</p>
+                    </a>
+                </li>
 
-                    <li class="nav-item">
-                        <a href="{% url 'profile' %}" class="nav-link">
-                            <i class="flaticon flaticon-class"></i>
-                            <p class="out">Hồ sơ</p>
-                        </a>
-                    </li>
+                <li class="nav-item">
+                    <a href="{% url 'profile' %}" class="nav-link">
+                        <i class="flaticon flaticon-class"></i>
+                        <p class="out">Hồ sơ</p>
+                    </a>
+                </li>
 
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="flaticon flaticon-blueprint"></i>
-                            <p class="out">Công cụ</p>
-                        </a>
-                    </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="flaticon flaticon-blueprint"></i>
+                        <p class="out">Công cụ</p>
+                    </a>
+                </li>
 
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="flaticon flaticon-online-course"></i>
-                            <p class="out">Học Tập</p>
-                        </a>
-                    </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="flaticon flaticon-online-course"></i>
+                        <p class="out">Học Tập</p>
+                    </a>
+                </li>
 
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="flaticon flaticon-graduation"></i>
-                            <p class="out">Thông báo</p>
-                        </a>
-                    </li>
-                </ul>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="flaticon flaticon-graduation"></i>
+                        <p class="out">Thông báo</p>
+                    </a>
+                </li>
+            </ul>
 
-                <div class="oc-btn">
-                    <svg class="svg-oc-btn" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                        version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 490.667 490.667"
-                        style="enable-background: new 0 0 490.667 490.667" xml:space="preserve">
-                        <path style="fill: #009688"
-                            d="M245.333,0C109.839,0,0,109.839,0,245.333s109.839,245.333,245.333,245.333  s245.333-109.839,245.333-245.333C490.514,109.903,380.764,0.153,245.333,0z" />
-                        <path style="fill: #fafafa"
-                            d="M290.133,104.533c-19.139-18.289-49.277-18.289-68.416,0c-18.893,18.881-18.902,49.503-0.021,68.395  c0.007,0.007,0.014,0.014,0.021,0.021l19.2,19.2H117.333C87.878,192.149,64,216.027,64,245.483  c0,29.455,23.878,53.333,53.333,53.333h123.584l-19.2,19.2c-17.522,20.175-15.371,50.734,4.804,68.257  c18.259,15.858,45.423,15.799,63.612-0.139l118.251-118.251c12.492-12.496,12.492-32.752,0-45.248L290.133,104.533z" />
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                        <g></g>
-                    </svg>
-                </div>
+            <div class="oc-btn">
+                <svg class="svg-oc-btn" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 490.667 490.667"
+                    style="enable-background: new 0 0 490.667 490.667" xml:space="preserve">
+                    <path style="fill: #009688"
+                        d="M245.333,0C109.839,0,0,109.839,0,245.333s109.839,245.333,245.333,245.333  s245.333-109.839,245.333-245.333C490.514,109.903,380.764,0.153,245.333,0z" />
+                    <path style="fill: #fafafa"
+                        d="M290.133,104.533c-19.139-18.289-49.277-18.289-68.416,0c-18.893,18.881-18.902,49.503-0.021,68.395  c0.007,0.007,0.014,0.014,0.021,0.021l19.2,19.2H117.333C87.878,192.149,64,216.027,64,245.483  c0,29.455,23.878,53.333,53.333,53.333h123.584l-19.2,19.2c-17.522,20.175-15.371,50.734,4.804,68.257  c18.259,15.858,45.423,15.799,63.612-0.139l118.251-118.251c12.492-12.496,12.492-32.752,0-45.248L290.133,104.533z" />
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                </svg>
+            </div>
             {% endif %}
         </div>
     </div>
@@ -272,28 +272,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'js/js/menu.js' %}"></script>
     <script src="{% static 'js/js/header.js' %}"></script>
-    
+
     <script>
         $(document).ready(function () {
 
 
-        $(".dark-theme").click(function () {
-            localStorage.setItem('theme', "dark");
-            darkTheme()
-        });
+            $(".dark-theme").click(function () {
+                localStorage.setItem('theme', "dark");
+                darkTheme()
+            });
 
-        $(".light-theme").click(function () {
-            localStorage.setItem('theme', "light");
+            $(".light-theme").click(function () {
+                localStorage.setItem('theme', "light");
 
-            lightTheme()
-        });
+                lightTheme()
+            });
 
 
-        if (localStorage.getItem('theme') === 'dark') {
-            darkTheme()
-        } else {
-            lightTheme()
-        }
+            if (localStorage.getItem('theme') === 'dark') {
+                darkTheme()
+            } else {
+                lightTheme()
+            }
 
         });
 

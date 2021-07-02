@@ -1,13 +1,4 @@
 $(document).ready(function () {
-    $('#search-field').keypress(function (event) {
-        let keycode = (event.keyCode ? event.keyCode : event.which);
-        if (keycode == '32') {
-            str = document.getElementById('search-field').value;
-            window.find(str, false)
-        }
-
-    });
-
     $(".dark-theme").click(function () {
         localStorage.setItem('theme', "dark");
         darkTheme()
