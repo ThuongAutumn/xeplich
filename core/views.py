@@ -723,7 +723,8 @@ def UpdateProfile(request):
         std.birth = birth
         std.phone = phone
         std.save()
+        messages.success(request,"Cập nhật thành công!")
     else:
-        return HttpResponse("lỗi")
+        messages.success(request,"Cập nhật không thành công!")
     return redirect('profile')
 

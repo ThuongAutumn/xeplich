@@ -38,7 +38,7 @@ Profile
         </div>
         <div class="form-group">
             <label for="">Ngày tháng năm sinh:</label>
-            <input type="date" name="birth" value="{{student.birth}}">
+            <input type="date" name="birth">
         </div>
         <div class="form-group">
             <label for="">Số điện thoại:</label>
@@ -73,7 +73,6 @@ Profile
     </table>
 </div>
 <script>
-    let day = new Date(`{{student.birth}}`).toISOString().slice(0, 10);
-    document.getElementsByName('birth')[0].value = day
+    document.getElementsByName('birth')[0].value = `{{student.birth|date:"Y-m-d"}}`
 </script>
 {% endblock contain %}
