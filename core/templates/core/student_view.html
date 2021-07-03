@@ -5,36 +5,67 @@
 Dashboard scheduling
 {% endblock title %}
 
-{% block script %}
-
-{% endblock script %}
+{% block head %}
+<title>Student</title>
+<link rel="stylesheet" href="{% static 'css/css/classes.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+{% endblock head %}
 
 {% block contain %}
-<form name="" action="" method="post">
-    {% csrf_token %}
-    <label for="">Tên học sinh:</label>
-    <input type="text" name="name" required><br>
-    <label for="">Ngày tháng năm sinh:</label>
-    <input type="date" name="birth" required><br>
-    <label for="">Các lớp học:</label><br>
-    {% for class in classes %}
-        <input type="checkbox" id="{{class.id}}" name="{{class.id}}" value="{{class.id}}">
-        <label for="{{class.id}}">{{class.name}}</label><br>
-    {% endfor %}
-    <input type="hidden" name="sId" value=""><br>
-    <input type="submit" name="add_student" value="Thêm"><input type="submit" name="update_student" value="Sửa"><input type="submit" name="delete_student" value="Xoá">
-</form>
-<div class="view">
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Tên học sinh</th>
-            <th>Ngày tháng năm sinh</th>
-            <th>Các lớp học</th>
-            <th></th>
-        </tr>
+<div class="class-wrapper">
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div{% if message.tags %} class="text-center alert alert-{{ message.tags }} fade in alert-dismissible show"{% endif %}>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true" style="font-size:20px">&times;</span>
+            </button>  
+        {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <form name="" action="" method="post">
+        {% csrf_token %}
+        <h2 class="qllh">students management</h2>
 
-    </table>
+        <div class="form-group">
+            <label for="">Tên học sinh:</label>
+            <input type="text" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="">Ngày tháng năm sinh:</label>
+            <input type="date" name="birth" required>
+        </div>
+        {% for class in classes %}
+        <div class="form-group" style="flex-basis: 30%;">
+            <label for="{{class.id}}">{{class.name}}
+                <input type="checkbox" id="{{class.id}}" name="{{class.id}}" value="{{class.id}}">
+            </label>
+        </div>
+        {% endfor %}
+
+        <div class="form-submit">
+            <input type="hidden" name="sId" value="">
+            <input type="submit" name="add_student" value="Thêm">
+            <input type="submit" name="update_student" value="Sửa">
+            <input type="submit" name="delete_student" value="Xoá">
+        </div>
+
+    </form>
+
+    <div class="view">
+        <table class="custom-table">
+            <tr class="tr-title">
+                <th>ID</th>
+                <th>Tên học sinh</th>
+                <th>Ngày tháng năm sinh</th>
+                <th>Các lớp học</th>
+            </tr>
+
+        </table>
+    </div>
 </div>
 <script>
     var table_view = document.querySelector('.view>table')
@@ -42,53 +73,52 @@ Dashboard scheduling
     var list_class = []
     loadTable()
 
-    function loadTable(){
+    function loadTable() {
         let text = ''
         {% for student in students %}
-            {% for cl in student.classes.all %}
-                list_class.push( {'id':'{{cl.id}}'} )
-            {% endfor %}
-            list_std.push({"id":'{{student.id}}', 'name':'{{student.name}}', 'classes':list_class, 'birth':'{{student.birth}}' })
-            list_class = []
-            text += "<tr>"
-            text += `<td><a class="aId" id='{{student.id}}' href="#">{{student.id}}</a></td>
+        {% for cl in student.classes.all %}
+        list_class.push({ 'id': '{{cl.id}}' })
+        {% endfor %}
+        list_std.push({ "id": '{{student.id}}', 'name': '{{student.name}}', 'classes': list_class, 'birth': '{{student.birth}}' })
+        list_class = []
+        text += "<tr>"
+        text += `<td><a class="aId" id='{{student.id}}' href="#">{{student.id}}</a></td>
             <td>{{student.name}}</td>
             <td>{{student.birth}}</td>
             <td>
             {% for class in student.classes.all %}
                 <p>{{class.name}}</p>
             {% endfor %}
-            </td>
-            <td><a href="#">Xoá</a></td>`
-            text += "</tr>"
+            </td>`
+        text += "</tr>"
         {% endfor %}
 
-        table_view.insertAdjacentHTML('beforeend',text)
-    
-    var name = document.getElementsByName('name')[0]
-    var birth = document.getElementsByName('birth')[0]
-    var sId = document.getElementsByName('sId')[0]
+        table_view.insertAdjacentHTML('beforeend', text)
 
-    document.querySelectorAll('.aId').forEach((item)=>{
-        item.addEventListener('click', (e)=>{
-            e.preventDefault()
-            id = e.target.id
-            sId.value = id
-            for (const std of list_std) {
-                if (std.id == id) {
-                    let day = new Date(std.birth).toISOString().slice(0, 10);
-                    name.value= std.name
-                    birth.value = day
-                    {% for class in classes %}
+        var name = document.getElementsByName('name')[0]
+        var birth = document.getElementsByName('birth')[0]
+        var sId = document.getElementsByName('sId')[0]
+
+        document.querySelectorAll('.aId').forEach((item) => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault()
+                id = e.target.id
+                sId.value = id
+                for (const std of list_std) {
+                    if (std.id == id) {
+                        let day = new Date(std.birth).toISOString().slice(0, 10);
+                        name.value = std.name
+                        birth.value = day
+                        {% for class in classes %}
                         document.getElementById(`{{class.id}}`).checked = false
-                    {% endfor %}
-                    for (const cl of std.classes) {
-                        document.getElementById(`${cl.id}`).checked = true
+                        {% endfor %}
+                        for (const cl of std.classes) {
+                            document.getElementById(`${cl.id}`).checked = true
+                        }
                     }
                 }
-            }
+            })
         })
-    })
     }
 </script>
 {% endblock contain %}

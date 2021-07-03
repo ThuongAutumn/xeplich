@@ -5,78 +5,118 @@
 Dashboard scheduling
 {% endblock title %}
 
-{% block script %}
-<link rel="stylesheet" href="{% static 'css/classes.css'%}">
-{% endblock script %}
+{% block head %}
+<title>Class</title>
+<link rel="stylesheet" href="{% static 'css/css/classes.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+{% endblock head %}
 
 {% block contain %}
-<form name="formclass" action="" method="post">
-    {% csrf_token %}
-    <label for="">Mã:</label>
-    <input type="text" name="slug" required><br>
-    <label for="">Tên lớp:</label>
-    <input type="text" name="name" required><br>
-    <label for="">Số lượng:</label>
-    <input type="number" name="number" min="0" max="40" required><br>
-    <label for="">Lịch học:</label>
-    <select name="schedule" id="schedule">
-        <option value="MWF">Shift Mon Wed Fri</option>
-        <option value="TTS">Shift Tue Thu Sat</option>
-        <option value="F">Shift All Week</option>
-    </select><br>
-    <label for="">Khoá học:</label>
-    <select name="courses" id="courses">
-        {% for course in courses %}
-            <option value="{{course.id}}">{{course.name}}</option>
+
+<div class="class-wrapper">
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div{% if message.tags %} class="text-center alert alert-{{ message.tags }} fade in alert-dismissible show"{% endif %}>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true" style="font-size:20px">&times;</span>
+            </button>  
+        {{ message }}
+        </div>
         {% endfor %}
-    </select>
-    <input type="hidden" id="iId" name = 'iId'>
-    <br>
-    <input type="submit" name="add_class" value="Thêm"><input type="submit" name="update_class" value="Sửa"><input type="submit" name ="delete_class" value="Xoá">
-</form>
-<div class="view">
-    <table>
-        <tr>
-            <th>Mã Lớp</th>
-            <th>Tên Lớp</th>
-            <th>Phòng</th>
-            <th>Khoá học</th>
-            <th>Sĩ số</th>
-            <th>Lịch học</th>
-            <th>Thời gian học còn lại</th>
-            <th>Trạng thái</th>
-            <th></th>
-        </tr>
-    
-    </table>
-</div> 
-  
+    </div>
+    {% endif %}
+    <form name="formclass" action="" method="post">
+        {% csrf_token %}
+        <h2 class="qllh">classes management</h2>
+
+        <div class="form-group">
+            <label for="">Mã lớp</label>
+            <input type="text" name="slug" required="" placeholder="Nhập mã lớp">
+        </div>
+
+        <div class="form-group">
+            <label for="">Tên lớp</label>
+            <input type="text" name="name" required="" placeholder="Nhập tên lớp">
+        </div>
+
+        <div class="form-group">
+            <label for="">Số lượng</label>
+            <input type="number" name="number" min="0" max="40" required="" placeholder="Nhập số lượng">
+        </div>
+
+        <div class="form-group">
+            <label for="">Lịch học</label>
+            <select name="schedule" id="schedule" required>
+                <option disabled selected value>Chọn lịch học</option>
+                <option value="MWF">Shift Mon Wed Fri</option>
+                <option value="TTS">Shift Tue Thu Sat</option>
+                <option value="F">Shift All Week</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="">Khoá học</label>
+            <select name="courses" id="courses">
+                <option disabled selected value>Chọn khóa học</option>
+
+                {% for course in courses %}
+                <option value="{{course.id}}">{{course.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-submit">
+            <input type="hidden" id="iId" name="iId">
+            <input type="submit" name="add_class" value="Thêm">
+            <input type="submit" name="update_class" value="Sửa">
+            <input type="submit" name="delete_class" value="Xoá">
+        </div>
+    </form>
+
+    <div class="view">
+        <table class="custom-table">
+            <tr class="tr-title">
+                <th>Mã Lớp</th>
+                <th>Tên Lớp</th>
+                <th>Khoá học</th>
+                <th>Sĩ số</th>
+                <th>Lịch học</th>
+                <th>Thời gian học còn lại</th>
+                <th>Trạng thái</th>
+            </tr>
+
+        </table>
+    </div>
+</div>
+
 <script>
     var table_view = document.querySelector('.view>table')
     var list_class = []
     loadTable()
 
-    function loadTable(){
+    function loadTable() {
         let text = ''
         {% for cl in classes %}
-            text += "<tr>"
-            text += `<td><a href="" id="{{cl.id}}" class="aSlug">{{cl.slug}}</a></td>
+        text += "<tr>"
+        text += `<td><a href="" id="{{cl.id}}" class="aSlug">{{cl.slug}}</a></td>
             <td><a href="{% url 'detail_class' cl.id %}">{{cl.name}}</a></td>
             <td>{{cl.course}}</td>
             <td>{{cl.number_student}}/{{cl.number}}</td>
             <td>{{cl.get_day_display}}</td>
             <td>{{cl.duration}} week</td>
             <td>{{cl.get_status_display}}</td>
-            <td><a href="#">Xoá</a></td>`
-            text += "</tr>"
-            list_class.push({"id":`{{cl.id}}`, "name":`{{cl.name}}` ,'slug':`{{cl.slug}}`, 'number':`{{cl.number}}`, 'schedule':`{{cl.day}}`, 'course':`{{cl.course.id}}`})
+            `
+        text += "</tr>"
+        list_class.push({ "id": `{{cl.id}}`, "name": `{{cl.name}}`, 'slug': `{{cl.slug}}`, 'number': `{{cl.number}}`, 'schedule': `{{cl.day}}`, 'course': `{{cl.course.id}}` })
         {% endfor %}
 
-        table_view.insertAdjacentHTML('beforeend',text)
+        table_view.insertAdjacentHTML('beforeend', text)
     }
 
-        document.querySelectorAll('.aSlug').forEach((item)=>{
-        item.addEventListener('click',(e)=>{
+    document.querySelectorAll('.aSlug').forEach((item) => {
+        item.addEventListener('click', (e) => {
             e.preventDefault()
             var slug = document.getElementsByName('slug')[0]
             var name = document.getElementsByName('name')[0]
@@ -85,19 +125,19 @@ Dashboard scheduling
             var khoahoc = document.getElementsByName('courses')[0]
             var iId = document.querySelector('#iId')
 
-            let id = e.target.id 
-            for( let i of list_class){
-                if( i.id == id){
-                    slug.setAttribute('value',i.slug) 
+            let id = e.target.id
+            for (let i of list_class) {
+                if (i.id == id) {
+                    slug.setAttribute('value', i.slug)
                     name.setAttribute('value', i.name)
                     number.setAttribute('value', i.number)
-                    lichhoc.value = i.schedule 
-                    khoahoc.value = i.course 
+                    lichhoc.value = i.schedule
+                    khoahoc.value = i.course
                     iId.setAttribute('value', i.id)
                 }
             }
         })
-        
+
     })
 </script>
 {% endblock contain %}

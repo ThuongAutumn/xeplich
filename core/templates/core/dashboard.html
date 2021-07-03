@@ -37,7 +37,7 @@
     var text = "";
     let i = 1
     {% for room in rooms %}
-        text += `<tr>
+    text += `<tr>
             <td>{{room.name}}</td>
             <td class="full_${i} day_1 abc"></td>
             <td class="full_${i} day_2 abc"></td>
@@ -47,7 +47,7 @@
             <td class="full_${i} day_6 abc"></td>
             <td class="weekend"></td>
         </tr>`;
-        i ++
+    i++
     {% endfor %}
     var ct = document.querySelector(".timetable");
     ct.insertAdjacentHTML("beforeend", text);
@@ -60,422 +60,434 @@
     let month = present.getMonth() + 1;
     let year = present.getFullYear();
     var standard = []
+    var current_standard = []
+    const inputSearch = document.querySelector("#search-field")
+
     getNow();
     checkSameWeek();
 
     loadData()
 
-    function loadData(){
+    inputSearch.addEventListener('input', (e) => {
+        let class_name = e.target.value.toLowerCase();
+        standard = []
+        current_standard.forEach(ele => {
+            if (ele[0].toLowerCase().search(class_name) != -1) {
+                standard.push(ele)
+            }
+        });
+        $(`.abc > a`).remove();
+        checkSameWeek()
+    })
+
+    function loadData() {
         {% for clrm in clrms %}
-            standard.push([`{{clrm.classID}}`,`{{clrm.roomID}}`,`{{clrm.weekID.start}}`,`{{clrm.weekID.end}}`,`{{clrm.day}}`,`{{clrm.classID.id}}`])
+        standard.push([`{{clrm.classID}}`, `{{clrm.roomID}}`, `{{clrm.weekID.start}}`, `{{clrm.weekID.end}}`, `{{clrm.day}}`, `{{clrm.classID.id}}`])
+        current_standard.push([`{{clrm.classID}}`, `{{clrm.roomID}}`, `{{clrm.weekID.start}}`, `{{clrm.weekID.end}}`, `{{clrm.day}}`, `{{clrm.classID.id}}`])
         {% endfor %}
-        var text = JSON.stringify(standard,undefined,0)
+        var text = JSON.stringify(standard, undefined, 0)
         console.log(text)
     }
 
 
     $(".pre").click(function () {
-    for (let i = 0; i < 7; i++) {
-        $(`.week-names > .${i} > p`).remove();
-    }
+        for (let i = 0; i < 7; i++) {
+            $(`.week-names > .${i} > p`).remove();
+        }
 
-    $(`.abc > a`).remove();
+        $(`.abc > a`).remove();
 
-    dateSubtraction();
-    checkSameWeek();
+        dateSubtraction();
+        checkSameWeek();
 
     });
 
     $(".now").click(function () {
-    for (let i = 0; i < 7; i++) {
-        $(`.week-names > .${i} > p`).remove();
-    }
+        for (let i = 0; i < 7; i++) {
+            $(`.week-names > .${i} > p`).remove();
+        }
 
-    $(`.abc > a`).remove();
+        $(`.abc > a`).remove();
 
-    getNow();
-    checkSameWeek();
+        getNow();
+        checkSameWeek();
     });
 
     $(".next").click(function () {
-    for (let i = 0; i < 7; i++) {
-        $(`.week-names > .${i} > p`).remove();
-    }
+        for (let i = 0; i < 7; i++) {
+            $(`.week-names > .${i} > p`).remove();
+        }
 
-    $(`.abc > a`).remove();
+        $(`.abc > a`).remove();
 
-    dateAddition();
+        dateAddition();
 
-    checkSameWeek();
+        checkSameWeek();
     });
 
 
-function dateSubtraction() {
-    if (date <= 14) {
-        if (month >= 2 && month <= 12) {
-        month -= 1;
+    function dateSubtraction() {
+        if (date <= 14) {
+            if (month >= 2 && month <= 12) {
+                month -= 1;
 
-        if (
-            (month === 1 ||
-            month === 3 ||
-            month === 5 ||
-            month === 7 ||
-            month === 8 ||
-            month === 10) &&
-            month !== 12
-        ) {
-            date = 17 + date;
+                if (
+                    (month === 1 ||
+                        month === 3 ||
+                        month === 5 ||
+                        month === 7 ||
+                        month === 8 ||
+                        month === 10) &&
+                    month !== 12
+                ) {
+                    date = 17 + date;
+                } else {
+                    if (month === 2) {
+                        if (year % 4 === 0 && year % 100 !== 0) {
+                            date = 15 + date;
+                        } else {
+                            date = 14 + date;
+                        }
+                    } else {
+                        date = 16 + date;
+                    }
+                }
+            } else {
+                month = 12;
+                year -= 1;
+                date = 17 + date;
+            }
         } else {
-            if (month === 2) {
-            if (year % 4 === 0 && year % 100 !== 0) {
-                date = 15 + date;
-            } else {
-                date = 14 + date;
-            }
-            } else {
-            date = 16 + date;
-            }
+            date -= 14;
         }
+
+        dateAddition();
+    }
+
+    function getNow() {
+        weekDay = present.getDay();
+        date = present.getDate();
+        month = present.getMonth() + 1;
+        year = present.getFullYear();
+
+        if (date > 7) {
+            switch (weekDay) {
+                case 0:
+                    date -= 7;
+                    break;
+                case 1:
+                    date -= 1;
+                    break;
+                case 2:
+                    date -= 2;
+                    break;
+                case 3:
+                    date -= 3;
+                    break;
+                case 4:
+                    date -= 4;
+                    break;
+                case 5:
+                    date -= 5;
+                    break;
+                case 6:
+                    date = weekDate - 6;
+                    break;
+            }
         } else {
-        month = 12;
-        year -= 1;
-        date = 17 + date;
-        }
-    } else {
-        date -= 14;
-    }
-
-    dateAddition();
-    }
-
-function getNow() {
-    weekDay = present.getDay();
-    date = present.getDate();
-    month = present.getMonth() + 1;
-    year = present.getFullYear();
-
-    if (date > 7) {
-        switch (weekDay) {
-        case 0:
-            date -= 7;
-            break;
-        case 1:
-            date -= 1;
-            break;
-        case 2:
-            date -= 2;
-            break;
-        case 3:
-            date -= 3;
-            break;
-        case 4:
-            date -= 4;
-            break;
-        case 5:
-            date -= 5;
-            break;
-        case 6:
-            date = weekDate - 6;
-            break;
-        }
-    } else {
-        switch (weekDay) {
-        case 0:
-            if (
-            month === 1 ||
-            month === 2 ||
-            month === 4 ||
-            month === 6 ||
-            month === 9 ||
-            month === 11
-            ) {
-            month -= 1;
-            date += 24;
-            } else {
-            if (month === 5 || month === 7 || month === 10 || month === 12) {
-                date += 23;
-                month -= 1;
-            } else {
-                if (month === 3) {
-                if ((year % 4 === 0 && year % 100 !== 0) || year % 400 == 0) {
-                    date += 22;
-                    month -= 1;
-                } else {
-                    date += 21;
-                    month -= 1;
-                }
-                }
-            }
-            }
-
-            break;
-        case 1:
-            if (date > 1) {
-            date -= 1;
-            } else {
-            if (
-                month === 1 ||
-                month === 2 ||
-                month === 4 ||
-                month === 6 ||
-                month === 9 ||
-                month === 11
-            ) {
-                date = 31;
-                month -= 1;
-            } else {
-                if (month === 5 || month === 7 || month === 10 || month === 12) {
-                date = 30;
-                month -= 1;
-                } else {
-                if (month === 3) {
-                    if ((year % 4 === 0 && year % 100 !== 0) || year % 400 == 0) {
-                    date += 22;
-                    month -= 1;
+            switch (weekDay) {
+                case 0:
+                    if (
+                        month === 1 ||
+                        month === 2 ||
+                        month === 4 ||
+                        month === 6 ||
+                        month === 9 ||
+                        month === 11
+                    ) {
+                        month -= 1;
+                        date += 24;
                     } else {
-                    month -= 1;
-                    date += 21;
+                        if (month === 5 || month === 7 || month === 10 || month === 12) {
+                            date += 23;
+                            month -= 1;
+                        } else {
+                            if (month === 3) {
+                                if ((year % 4 === 0 && year % 100 !== 0) || year % 400 == 0) {
+                                    date += 22;
+                                    month -= 1;
+                                } else {
+                                    date += 21;
+                                    month -= 1;
+                                }
+                            }
+                        }
                     }
-                }
-                }
+
+                    break;
+                case 1:
+                    if (date > 1) {
+                        date -= 1;
+                    } else {
+                        if (
+                            month === 1 ||
+                            month === 2 ||
+                            month === 4 ||
+                            month === 6 ||
+                            month === 9 ||
+                            month === 11
+                        ) {
+                            date = 31;
+                            month -= 1;
+                        } else {
+                            if (month === 5 || month === 7 || month === 10 || month === 12) {
+                                date = 30;
+                                month -= 1;
+                            } else {
+                                if (month === 3) {
+                                    if ((year % 4 === 0 && year % 100 !== 0) || year % 400 == 0) {
+                                        date += 22;
+                                        month -= 1;
+                                    } else {
+                                        month -= 1;
+                                        date += 21;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    break;
+                case 2:
+                    if (date > 2) {
+                        date -= 2;
+                    } else {
+                        if (
+                            month === 1 ||
+                            month === 2 ||
+                            month === 4 ||
+                            month === 6 ||
+                            month === 9 ||
+                            month === 11
+                        ) {
+                            date += 29;
+                            month -= 1;
+                        } else {
+                            if (month === 5 || month === 7 || month === 10 || month === 12) {
+                                date += 28;
+                                month -= 1;
+                            } else {
+                                if (month === 3) {
+                                    if ((year % 4 === 0 && year % 100 !== 0) || year % 400 == 0) {
+                                        date += 27;
+                                        month -= 1;
+                                    } else {
+                                        month -= 1;
+                                        date += 26;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 3:
+                    if (date > 3) {
+                        date -= 3;
+                    } else {
+                        if (
+                            month === 1 ||
+                            month === 2 ||
+                            month === 4 ||
+                            month === 6 ||
+                            month === 9 ||
+                            month === 11
+                        ) {
+                            date += 28;
+                            month -= 1;
+                        } else {
+                            if (month === 5 || month === 7 || month === 10 || month === 12) {
+                                date += 27;
+                                month -= 1;
+                            } else {
+                                if (month === 3) {
+                                    if ((year % 4 === 0 && year % 100 !== 0) || year % 400 == 0) {
+                                        date += 26;
+                                        month -= 1;
+                                    } else {
+                                        month -= 1;
+                                        date += 25;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 4:
+                    if (date > 4) {
+                        date -= 4;
+                    } else {
+                        if (
+                            month === 1 ||
+                            month === 2 ||
+                            month === 4 ||
+                            month === 6 ||
+                            month === 9 ||
+                            month === 11
+                        ) {
+                            date += 27;
+                            month -= 1;
+                        } else {
+                            if (month === 5 || month === 7 || month === 10 || month === 12) {
+                                date += 26;
+                                month -= 1;
+                            } else {
+                                if (month === 3) {
+                                    if ((year % 4 === 0 && year % 100 !== 0) || year % 400 == 0) {
+                                        date += 25;
+                                        month -= 1;
+                                    } else {
+                                        month -= 1;
+                                        date += 24;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 5:
+                    if (date > 5) {
+                        date -= 5;
+                    } else {
+                        if (
+                            month === 1 ||
+                            month === 2 ||
+                            month === 4 ||
+                            month === 6 ||
+                            month === 9 ||
+                            month === 11
+                        ) {
+                            date += 26;
+                            month -= 1;
+                        } else {
+                            if (month === 5 || month === 7 || month === 10 || month === 12) {
+                                date += 25;
+                                month -= 1;
+                            } else {
+                                if (month === 3) {
+                                    if ((year % 4 === 0 && year % 100 !== 0) || year % 400 == 0) {
+                                        date += 24;
+                                        month -= 1;
+                                    } else {
+                                        month -= 1;
+                                        date += 23;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 6:
+                    if (date > 6) {
+                        date -= 6;
+                    } else {
+                        if (
+                            month === 1 ||
+                            month === 2 ||
+                            month === 4 ||
+                            month === 6 ||
+                            month === 9 ||
+                            month === 11
+                        ) {
+                            date += 25;
+                            month -= 1;
+                        } else {
+                            if (month === 5 || month === 7 || month === 10 || month === 12) {
+                                date += 24;
+                                month -= 1;
+                            } else {
+                                if (month === 3) {
+                                    if ((year % 4 === 0 && year % 100 !== 0) || year % 400 == 0) {
+                                        date += 23;
+                                        month -= 1;
+                                    } else {
+                                        month -= 1;
+                                        date += 22;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    break;
             }
+        }
+
+        dateAddition();
+    }
+
+    function dateAddition() {
+        for (let i = 0; i < 7; i++) {
+            date += 1;
+            if (
+                ((month === 1 ||
+                    month === 3 ||
+                    month === 5 ||
+                    month === 7 ||
+                    month === 8 ||
+                    month === 10) &&
+                    date > 31) ||
+                ((month === 4 || month === 6 || month === 9 || month === 11) &&
+                    date > 30) ||
+                (month === 2 &&
+                    ((year % 4 === 0 && year % 100 !== 0) || year % 400 == 0) &&
+                    date > 29) ||
+                (month === 2 &&
+                    !((year % 4 === 0 && year % 100 !== 0) || year % 400 == 0) &&
+                    date > 28)
+            ) {
+                date = 1;
+                month += 1;
+            } else {
+                if (month === 12 && date > 31) {
+                    date = 1;
+                    month = 1;
+                    year += 1;
+                }
             }
 
-            break;
-        case 2:
-            if (date > 2) {
-            date -= 2;
-            } else {
-            if (
-                month === 1 ||
-                month === 2 ||
-                month === 4 ||
-                month === 6 ||
-                month === 9 ||
-                month === 11
-            ) {
-                date += 29;
-                month -= 1;
-            } else {
-                if (month === 5 || month === 7 || month === 10 || month === 12) {
-                date += 28;
-                month -= 1;
-                } else {
-                if (month === 3) {
-                    if ((year % 4 === 0 && year % 100 !== 0) || year % 400 == 0) {
-                    date += 27;
-                    month -= 1;
-                    } else {
-                    month -= 1;
-                    date += 26;
-                    }
-                }
-                }
-            }
-            }
-            break;
-        case 3:
-            if (date > 3) {
-            date -= 3;
-            } else {
-            if (
-                month === 1 ||
-                month === 2 ||
-                month === 4 ||
-                month === 6 ||
-                month === 9 ||
-                month === 11
-            ) {
-                date += 28;
-                month -= 1;
-            } else {
-                if (month === 5 || month === 7 || month === 10 || month === 12) {
-                date += 27;
-                month -= 1;
-                } else {
-                if (month === 3) {
-                    if ((year % 4 === 0 && year % 100 !== 0) || year % 400 == 0) {
-                    date += 26;
-                    month -= 1;
-                    } else {
-                    month -= 1;
-                    date += 25;
-                    }
-                }
-                }
-            }
-            }
-            break;
-        case 4:
-            if (date > 4) {
-            date -= 4;
-            } else {
-            if (
-                month === 1 ||
-                month === 2 ||
-                month === 4 ||
-                month === 6 ||
-                month === 9 ||
-                month === 11
-            ) {
-                date += 27;
-                month -= 1;
-            } else {
-                if (month === 5 || month === 7 || month === 10 || month === 12) {
-                date += 26;
-                month -= 1;
-                } else {
-                if (month === 3) {
-                    if ((year % 4 === 0 && year % 100 !== 0) || year % 400 == 0) {
-                    date += 25;
-                    month -= 1;
-                    } else {
-                    month -= 1;
-                    date += 24;
-                    }
-                }
-                }
-            }
-            }
-            break;
-        case 5:
-            if (date > 5) {
-            date -= 5;
-            } else {
-            if (
-                month === 1 ||
-                month === 2 ||
-                month === 4 ||
-                month === 6 ||
-                month === 9 ||
-                month === 11
-            ) {
-                date += 26;
-                month -= 1;
-            } else {
-                if (month === 5 || month === 7 || month === 10 || month === 12) {
-                date += 25;
-                month -= 1;
-                } else {
-                if (month === 3) {
-                    if ((year % 4 === 0 && year % 100 !== 0) || year % 400 == 0) {
-                    date += 24;
-                    month -= 1;
-                    } else {
-                    month -= 1;
-                    date += 23;
-                    }
-                }
-                }
-            }
-            }
-            break;
-        case 6:
-            if (date > 6) {
-            date -= 6;
-            } else {
-            if (
-                month === 1 ||
-                month === 2 ||
-                month === 4 ||
-                month === 6 ||
-                month === 9 ||
-                month === 11
-            ) {
-                date += 25;
-                month -= 1;
-            } else {
-                if (month === 5 || month === 7 || month === 10 || month === 12) {
-                date += 24;
-                month -= 1;
-                } else {
-                if (month === 3) {
-                    if ((year % 4 === 0 && year % 100 !== 0) || year % 400 == 0) {
-                    date += 23;
-                    month -= 1;
-                    } else {
-                    month -= 1;
-                    date += 22;
-                    }
-                }
-                }
-            }
-            }
-            break;
+            $(`.week-names > .${i}`).append(`<p>${date}/${month}/${year}<p/>`);
+            $(`.week-names > th > p:nth-child(2)`).remove();
         }
     }
 
-    dateAddition();
-}
+    function checkSameWeek() {
+        let currentSunday = new Date(`${month}/${date}/${year}`);
+        for (let i = 0; i < standard.length; i++) {
+            let sD = new Date(standard[i][2]);
+            if (currentSunday - sD === 518400000) {
+                let schedule = standard[i][4];
 
-function dateAddition() {
-    for (let i = 0; i < 7; i++) {
-        date += 1;
-        if (
-        ((month === 1 ||
-            month === 3 ||
-            month === 5 ||
-            month === 7 ||
-            month === 8 ||
-            month === 10) &&
-            date > 31) ||
-        ((month === 4 || month === 6 || month === 9 || month === 11) &&
-            date > 30) ||
-        (month === 2 &&
-            ((year % 4 === 0 && year % 100 !== 0) || year % 400 == 0) &&
-            date > 29) ||
-        (month === 2 &&
-            !((year % 4 === 0 && year % 100 !== 0) || year % 400 == 0) &&
-            date > 28)
-        ) {
-        date = 1;
-        month += 1;
-        } else {
-        if (month === 12 && date > 31) {
-            date = 1;
-            month = 1;
-            year += 1;
-        }
-        }
+                switch (schedule) {
+                    case "MWF":
+                        $(`.day_1.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
+                        $(`.day_3.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
+                        $(`.day_5.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
+                        $(`.abc > a > p:nth-child(2)`).remove();
+                        break;
 
-        $(`.week-names > .${i}`).append(`<p>${date}/${month}/${year}<p/>`);
-        $(`.week-names > th > p:nth-child(2)`).remove();
-    }
-    }
-
-function checkSameWeek() {
-    let currentSunday = new Date(`${month}/${date}/${year}`);
-    for (let i = 0; i < standard.length; i++) {
-        let sD = new Date(standard[i][2]);
-        if (currentSunday - sD === 518400000) {
-        let schedule = standard[i][4];
-
-        switch (schedule) {
-            case "MWF":
-            $(`.day_1.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
-            $(`.day_3.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
-            $(`.day_5.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
-            $(`.abc > a > p:nth-child(2)`).remove();
-            break;
-
-            case "TTS":
-            $(`.day_2.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
-            $(`.day_4.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
-            $(`.day_6.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
-            $(`.abc > a > p:nth-child(2)`).remove();
-            break;
+                    case "TTS":
+                        $(`.day_2.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
+                        $(`.day_4.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
+                        $(`.day_6.full_${standard[i][1][6]}`).append(`<a href="class/${standard[i][5]}"><p>${standard[i][0]}<p/></a>`);
+                        $(`.abc > a > p:nth-child(2)`).remove();
+                        break;
 
 
-        }
+                }
+            }
         }
     }
-    }
 
-    
-</script>
 
-<script>
-    $('.now').click()
 </script>
 
 {% endblock contain %}

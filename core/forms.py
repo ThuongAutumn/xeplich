@@ -31,4 +31,6 @@ class RegistrationForm(forms.Form):
 
     def save(self):
         user = User.objects.create_user(username=self.cleaned_data['username'], email =self.cleaned_data['email'], password=self.cleaned_data['password1'], first_name = self.cleaned_data['first_name'])
-        Student.objects.create(user = user,name = self.cleaned_data['first_name'])
+        print("tạo user thành công ")
+        Student.objects.create(user = user,name = self.cleaned_data['first_name'], birth = "2021-01-01")
+        print("tạo student thành công ")

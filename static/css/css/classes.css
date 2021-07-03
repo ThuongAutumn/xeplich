@@ -1,0 +1,285 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Audiowide&display=swap");
+body {
+  background-color: #3c373e;
+  font-weight: 300;
+}
+
+p {
+  font-weight: 300;
+}
+
+a {
+  -webkit-transition: 0.3s all ease;
+  transition: 0.3s all ease;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.class-wrapper {
+  margin: 150px auto;
+  margin-bottom: 100px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  max-width: 1040px;
+}
+
+.class-wrapper h2 {
+  color: #fa0;
+}
+
+.class-wrapper form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 120px;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  border-radius: 35px;
+  padding: 2.5rem 0.625rem;
+  padding-top: 100px;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background: #edece8;
+  -webkit-box-shadow: 10px 10px 50px #cecdca;
+  box-shadow: 10px 10px 50px #cecdca;
+  position: relative;
+}
+
+.class-wrapper form::before {
+  content: "";
+  height: 2px;
+  width: 0;
+  position: absolute;
+  top: calc(10% + 35px);
+  background-color: #fa0;
+  left: middle;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.class-wrapper form:hover::before {
+  width: 30%;
+}
+
+.qllh {
+  position: absolute;
+  top: 5%;
+  text-transform: capitalize;
+  font-weight: 400;
+  line-height: 1.5;
+  font-size: 35px;
+  font-family: "Audiowide", "Comfortaa", sans-serif;
+  color: #447dff;
+}
+
+.view {
+  margin-bottom: 90px;
+}
+
+.class-wrapper h2 {
+  margin: 50px auto;
+  margin-top: 0;
+  text-transform: capitalize;
+}
+
+.class-wrapper .detail-class {
+}
+
+.class-wrapper form .form-group,
+.class-wrapper form .form-submit {
+  -ms-flex-preferred-size: 45%;
+  flex-basis: 45%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem auto;
+  padding: 0.25rem;
+}
+
+.class-wrapper form .form-group label,
+.class-wrapper form .form-submit label {
+  font-family: "Comfortaa";
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.class-wrapper form .form-group input,
+.class-wrapper form .form-group select,
+.class-wrapper form .form-submit input,
+.class-wrapper form .form-submit select {
+  margin: 0;
+  font-family: "Comfortaa";
+  font-size: 1rem;
+  line-height: inherit;
+  display: block;
+  width: 100%;
+  color: #495057;
+  background-color: #edece8;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  -webkit-transition: border-color 0.15s ease-in-out,
+    -webkit-box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out,
+    -webkit-box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+    -webkit-box-shadow 0.15s ease-in-out;
+  font-size: 20px;
+  padding: 1rem;
+  min-height: 3rem;
+  border-radius: 9px;
+  background: #edece8;
+  -webkit-box-shadow: inset 6px 6px 13px #d5d4d1, inset -6px -6px 13px #ffffff;
+  box-shadow: inset 6px 6px 13px #d5d4d1, inset -6px -6px 13px #ffffff;
+}
+
+.class-wrapper form .form-group input:focus,
+.class-wrapper form .form-group select:focus,
+.class-wrapper form .form-submit input:focus,
+.class-wrapper form .form-submit select:focus {
+  border-color: #ffffff;
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+}
+
+.class-wrapper form .form-submit {
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.class-wrapper form .form-submit input {
+  -ms-flex-preferred-size: 30%;
+  flex-basis: 30%;
+}
+
+.class-wrapper .view .custom-table {
+  min-width: 900px;
+  margin: auto;
+}
+
+.class-wrapper .view .custom-table tbody tr {
+  -webkit-transition: 0.3s all ease;
+  transition: 0.3s all ease;
+  border: 1px solid #000;
+  background-color: #555;
+}
+
+.class-wrapper .view .custom-table tbody tr th,
+.class-wrapper .view .custom-table tbody tr td {
+  font-family: "Comfortaa";
+  color: #fff;
+  font-weight: 400;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  font-weight: 300;
+  border: none;
+  -webkit-transition: 0.3s all ease;
+  transition: 0.3s all ease;
+  cursor: pointer;
+  padding: 15px;
+  text-align: center;
+}
+
+.class-wrapper .view .custom-table tbody tr th:nth-child(2) a,
+.class-wrapper .view .custom-table tbody tr td:nth-child(2) a {
+  color: #fff;
+}
+
+.class-wrapper .view .custom-table tbody tr th a,
+.class-wrapper .view .custom-table tbody tr td a {
+  font-family: "Comfortaa";
+  color: #c5c4c4;
+}
+
+.class-wrapper .view .custom-table tbody tr:hover td,
+.class-wrapper .view .custom-table tbody tr:focus td {
+  color: #fff;
+}
+
+.class-wrapper .view .custom-table tbody tr:hover td a,
+.class-wrapper .view .custom-table tbody tr:focus td a {
+  color: #fa0;
+}
+
+.class-wrapper .view .custom-table tbody tr:nth-child(odd) {
+  background-color: #777;
+}
+
+.class-wrapper .view .custom-table tbody tr.tr-title {
+  background-color: #333;
+}
+
+.class-wrapper .view .custom-table tbody tr.tr-title th {
+  color: #fa0;
+}
+
+.class-light-theme .view .custom-table tbody tr {
+  border: 1px solid #000;
+  background-color: #e5ebf2;
+}
+
+.class-light-theme .view .custom-table tbody tr th,
+.class-light-theme .view .custom-table tbody tr td {
+  font-family: "Comfortaa";
+  color: #000000;
+}
+
+.class-light-theme .view .custom-table tbody tr th:nth-child(2) a,
+.class-light-theme .view .custom-table tbody tr td:nth-child(2) a {
+  color: #000000;
+}
+
+.class-light-theme .view .custom-table tbody tr th a,
+.class-light-theme .view .custom-table tbody tr td a {
+  font-family: "Comfortaa";
+  color: grey;
+}
+
+.class-light-theme .view .custom-table tbody tr:hover td,
+.class-light-theme .view .custom-table tbody tr:focus td {
+  color: #000000;
+}
+
+.class-light-theme .view .custom-table tbody tr:hover td a,
+.class-light-theme .view .custom-table tbody tr:focus td a {
+  color: #ff7b00;
+}
+
+.class-light-theme .view .custom-table tbody tr:nth-child(odd) {
+  background-color: #d2deef;
+}
+
+.class-light-theme .view .custom-table tbody tr.tr-title {
+  background-color: #5b9bd5;
+}
+
+.class-light-theme .view .custom-table tbody tr.tr-title th {
+  color: #f9fbfd;
+}
+/*# sourceMappingURL=class.css.map */
